@@ -106,7 +106,7 @@ int main() {
     ncbdDist.plotFunction();
 
     // Read and plot Negative Crystal Ball Distribution data
-    string filename2 = "Outputs/data/NegativeCrystalBallDistribution.txt";  // Use the correct relative file path
+    string filename2 = "Outputs/data/NagetiveCrystalBallDistribution.txt";  // Use the correct relative file path
     vector<double> Crystal = readDataFromFile(filename2);
     if (!Crystal.empty()) {
         ncbdDist.plotData(Crystal, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
