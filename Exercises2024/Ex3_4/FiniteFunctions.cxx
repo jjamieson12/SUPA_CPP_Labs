@@ -80,6 +80,7 @@ Integration by hand (output needed to normalise function when plotting)
 
     return m_Integral;
 }
+
 double FiniteFunction::integral(int Ndiv) { //public
   if (Ndiv <= 0){
     std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
@@ -92,14 +93,15 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
-/*
+
+
 std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan) {
     std::vector< std::pair<double, double> > function_scan;
     double step = (m_RMax - m_RMin) / (double)Nscan;
     double x = m_RMin;
 
     // Ensure the integral is calculated
-    if (m_Integral == NULL) {
+    if (m_Integral == 0.0) {
         std::cout << "Integral not set, doing it now" << std::endl;
         this->integral(Nscan);
         std::cout << "integral: " << m_Integral << ", calculated using " << Nscan << " divisions" << std::endl;
@@ -115,7 +117,7 @@ std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan)
     return function_scan;
 }
 
-*/
+
 
 
 
