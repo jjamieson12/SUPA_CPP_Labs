@@ -1,4 +1,4 @@
-
+#include <random>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,8 +11,8 @@ using std::filesystem::path;
 
 //Empty constructor
 FiniteFunction::FiniteFunction(){
-  m_RMin = -5.0;
-  m_RMax = 5.0;
+  m_RMin = -20.0;
+  m_RMax = 20.0;
   this->checkPath("DefaultFunction");
   m_Integral = 0.0;
 }
@@ -121,10 +121,62 @@ std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan)
 
 
 /*
+
+/*
+#################
+Sampling task
+#################
+*/
+
+// Sampling using the Metropolis algorithm
+std::vector<double> FiniteFunction::sampleUsingMetropolis(int num_samples, double sigma) {
+    std::vector<double> samples;
+    
+    // Random number generators for uniform and normal distributions
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> uniform_dist(m_RMin, m_RMax); // Uniform distribution between m_RMin and m_RMax
+    std::normal_distribution<double> normal_dist(0.0, sigma); // Gaussian noise with mean 0 and std dev sigma
+
+    // Initial sample
+    double xi = uniform_dist(gen);
+    samples.push_back(xi); // Add the initial sample
+
+    for (int i = 1; i < num_samples; ++i) {
+        // Propose a new sample using a Gaussian distribution centered around the current sample
+        double y = xi + normal_dist(gen);
+        
+        // Ensure the new sample is within bounds
+        if (y < m_RMin) y = m_RMin;
+        if (y > m_RMax) y = m_RMax;
+
+        // Calculate the acceptance ratio
+        double f_xi = this->callFunction(xi);
+        double f_y = this->callFunction(y);
+        double A = std::min(f_y / f_xi, 1.0); // Metropolis acceptance criterion
+
+        // Generate a random number between 0 and 1
+        std::uniform_real_distribution<double> acceptance_dist(0.0, 1.0);
+        double T = acceptance_dist(gen);
+
+        // Accept or reject the new sample
+        if (T < A) {
+            xi = y; // Accept the new sample
+        }
+        
+        samples.push_back(xi); // Add the sample (accepted or rejected)
+    }
+
+    return samples;
+ }
+
+
+ /*
 ###################
 //Helper functions 
 ###################
 */
+
 // Generate paths from user defined stem
 void FiniteFunction::checkPath(std::string outfile){
  path fp = outfile;
@@ -159,10 +211,13 @@ void FiniteFunction::plotData(std::vector<double> &points, int Nbins, bool isdat
   if (isdata){
     m_data = this->makeHist(points,Nbins);
     m_plotdatapoints = true;
-  }
-  else{
     m_samples = this->makeHist(points,Nbins);
     m_plotsamplepoints = true;
+  }
+  else{
+    std::cout<<"No data to produce sample"<<std::endl;
+   // m_samples = this->makeHist(points,Nbins);
+   // m_plotsamplepoints = true;
   }
 }
 
