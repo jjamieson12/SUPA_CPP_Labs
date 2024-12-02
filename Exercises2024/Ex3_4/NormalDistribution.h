@@ -25,6 +25,8 @@ public:
     // Override the callFunction method
     double callFunction(double x) override;
     //double evaluate(double x) const;
+    
+
 
     // Optional: Provide methods to set/get mean and standard deviation
     void setMean(double mean);

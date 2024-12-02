@@ -135,8 +135,10 @@ std::vector<double> FiniteFunction::sampleUsingMetropolis(int num_samples, doubl
     // Random number generators for uniform and normal distributions
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> uniform_dist(m_RMin, m_RMax); // Uniform distribution between m_RMin and m_RMax
-    std::normal_distribution<double> normal_dist(0.0, sigma); // Gaussian noise with mean 0 and std dev sigma
+    std::uniform_real_distribution<double> uniform_dist(m_RMin, m_RMax); 
+    // Uniform distribution between m_RMin and m_RMax
+    std::normal_distribution<double> normal_dist(0.0, sigma); 
+    // Gaussian noise with mean 0 and std dev sigma
 
     // Initial sample
     double xi = uniform_dist(gen);

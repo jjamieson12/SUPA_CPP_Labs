@@ -21,11 +21,12 @@ public:
   void setOutfile(std::string outfile);
   void plotFunction(); // Plot the function using scanFunction
   void plotData(std::vector<double> &points, int NBins, bool isdata = true); // Plot data points
-  
+  void generateSamples(int num_samples);
+
   virtual void printInfo(); // Dump parameter info about the current function (Overridable)
   virtual double callFunction(double x); // Call the function with value x (Overridable)
   void normalize(int Ndiv); // Normalize the function
-  bool metropolisAccept(double current_value, double proposed_value, double sigma);
+   bool metropolisAccept(double current_value, double proposed_value, double sigma);
 
   std::vector<double> sampleUsingMetropolis(int num_samples, double sigma);
   std::vector<std::pair<double, double>> scanFunction(int Nscan = 1000);
@@ -47,21 +48,23 @@ public:
   bool m_plotdatapoints = true; // Flag to determine whether to plot input data
   bool m_plotsamplepoints = true; // Flag to determine whether to plot sampled data
 
-  double integrate(int Ndiv);
+  virtual double integrate(int Ndiv);
   std::vector<std::pair<double, double>> makeHist(std::vector<double> &points, int Nbins); // Helper function for histogram
   void checkPath(std::string outstring); // Helper function to ensure data and PNG paths are correct
   void generatePlot(Gnuplot &gp); 
   
   double invxsquared(double x); // Default functional form
   
-private:
+public:
   std::random_device rd;
   std::mt19937 gen; // Random number generator
   
   std::uniform_real_distribution<double> uniform_dist; // Uniform distribution
-  std::normal_distribution<double> normal_dist; // Normal distribution
+ // std::normal_distribution<double> normal_dist; // Normal distribution
   
 };
+
+
 //use this sepately inside the drived classes
 // Constructor with range and output file initialization
 //FiniteFunction::FiniteFunction(double range_min, double range_max, std::string outfile)

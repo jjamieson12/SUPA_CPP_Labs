@@ -76,10 +76,10 @@ int main() {
 
     // Read and plot Normal Distribution data
     string filename1 = "Outputs/data/NormalDistribution.txt"; 
-     // Use the correct relative file path
+     // path
     vector<double> normal = readDataFromFile(filename1);
     if (!normal.empty()) {
-        normalDist.plotData(normal, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        normalDist.plotData(normal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
 
     // Cauchy-Lorentz Distribution
@@ -93,7 +93,7 @@ int main() {
     string filename4 = "Outputs/data/CauchyLorentzDistribution.txt";  // Use the correct relative file path
     vector<double> Cauchy = readDataFromFile(filename4);
     if (!Cauchy.empty()) {
-        cld.plotData(Cauchy, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        cld.plotData(Cauchy, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
 
     // Negative Crystal Ball Distribution
@@ -109,7 +109,7 @@ int main() {
     string filename2 = "Outputs/data/NagetiveCrystalBallDistribution.txt";  // Use the correct relative file path
     vector<double> Crystal = readDataFromFile(filename2);
     if (!Crystal.empty()) {
-        ncbdDist.plotData(Crystal, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        ncbdDist.plotData(Crystal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
         //func.plotSample(mysteryData2, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
