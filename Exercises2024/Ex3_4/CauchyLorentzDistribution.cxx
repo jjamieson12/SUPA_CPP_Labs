@@ -9,88 +9,28 @@ CauchyLorentzDistribution::CauchyLorentzDistribution(double range_min, double ra
     if (gamma <= 0) throw std::invalid_argument("Gamma must be greater than 0.");
 }
 
-// Override callFunction to implement the Cauchy-Lorentz formula
-double CauchyLorentzDistribution::callFunction(double x) {
-    double numerator = m_gamma;
-    double denominator = M_PI * (m_gamma * m_gamma + std::pow(x - m_x0, 2));
-    return numerator / denominator;
-}
-
-/*
-// Generate plot data
-void CauchyLorentzDistribution::plotFunction() {
-    std::ofstream file("Outputs/data/CauchyLorentzDistribution.txt");
-    if (!file.is_open()) {
-        std::cerr << "Error: Could not create the file.\n";
-        return;
-    }
-
-    // Debugging: Print the range
-    std::cout << "Range: " << m_range_min << " to " << m_range_max << std::endl;
-
-    // Loop through values of x from range_min to range_max using step_size
-    for (double x = m_range_min; x <= m_range_max; x += m_step_size) {
-        double y = callFunction(x);
-        file << x << " " << y << "\n";  // Write the x, y values to the file
-        std::cout << "x: " << x << ", y: " << y << "\n";  // Also print the values to the console
-    }
-
-    file.close();
-    std::cout << "Data generated and written to 'CauchyLorentzDistribution.txt'.\n";
-}
-*/
-/*
-
-#include "CauchyLorentzDistribution.h"
-#include <cmath>
-#include <fstream>
-#include <iostream>
-#include <stdexcept>
-
-// Constructor
-CauchyLorentzDistribution::CauchyLorentzDistribution(double range_min, double range_max, std::string outfile, double x0, double gamma, double step_size)
-    : FiniteFunction(range_min, range_max, outfile), m_x0(x0), m_gamma(gamma), m_step_size(step_size) {
-    if (gamma <= 0) throw std::invalid_argument("Gamma must be greater than 0.");
-    // Debugging: Check initial values of x0 and gamma
-    std::cout << "Initializing CauchyLorentzDistribution with x0 = " << m_x0 << " and gamma = " << m_gamma << std::endl;
-}
-
-// Override callFunction to implement the Cauchy-Lorentz formula
 double CauchyLorentzDistribution::callFunction(double x) {
     double numerator = m_gamma;
     double denominator = M_PI * (m_gamma * m_gamma + std::pow(x - m_x0, 2));
 
-    // Debugging: Check calculation of the function
+    // Print intermediate values for debugging
+    std::cout << "x: " << x << ", m_gamma: " << m_gamma << ", m_x0: " << m_x0 << "\n";
+    std::cout << "Numerator: " << numerator << ", Denominator: " << denominator << "\n";
+
     double result = numerator / denominator;
-    std::cout << "callFunction(x = " << x << ") = " << result << std::endl;
+
+    // Print the result
+    std::cout << "Result: " << result << "\n";
 
     return result;
 }
-double m_range_min = -20.0;
-double m_range_max = 20.0;
-double m_step_size = 0.001;
-// Generate plot data
-void CauchyLorentzDistribution::plotFunction() {
-    // Ensure the output directory exists
-    // Open the output file
-    std::ofstream file("Outputs/data/CauchyLorentzDistribution.txt");
-    if (!file.is_open()) {
-        std::cerr << "Error: Could not create the file.\n";
-        return;
-    }
-
-    // Debugging: Verify the range and step size
-    std::cout << "Plotting data from x = " << m_range_min << " to x = " << m_range_max << " with step size = " << m_step_size << std::endl;
-
-    // Loop through values of x from range_min to range_max
-    for (double x = m_range_min; x <= m_range_max; x += m_step_size) {
-        double y = callFunction(x);
-        file << x << " " << y << "\n";
-        std::cout << "x: " << x << ", y: " << y << std::endl;
-    }
-
-    file.close();
-    std::cout << "Data generated and written to 'CauchyLorentzDistribution.txt'.\n";
+/*
+// Override callFunction to implement the Cauchy-Lorentz formula
+double CauchyLorentzDistribution::callFunction(double x) {
+    double numerator = m_gamma;
+    double denominator = M_PI * (m_gamma * m_gamma + std::pow(x - m_x0, 2));
+    
+    return numerator / denominator;
 }
 */
 // Setters and Getters

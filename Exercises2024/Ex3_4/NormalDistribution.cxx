@@ -11,7 +11,10 @@ NormalDistribution::NormalDistribution(double range_min, double range_max, std::
 double NormalDistribution::callFunction(double x) {
     double normalizationFactor = 1.0 / (m_stddev * sqrt(2 * M_PI));
     double exponent = -0.5 * pow((x - m_mean) / m_stddev, 2);
-    return normalizationFactor * exp(exponent);
+    //return normalizationFactor * exp(exponent);
+     std::cout << "callFunction(" << x << ") -> " <<  normalizationFactor * exp(exponent)<< " with mean = " << m_mean << " and stddev = " << m_stddev << std::endl;
+     return normalizationFactor * exp(exponent);
+    
 }
 
 /*

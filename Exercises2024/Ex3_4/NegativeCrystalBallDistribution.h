@@ -1,3 +1,4 @@
+
 #pragma once
 #include "FiniteFunctions.h"
 #include <cmath>
@@ -20,16 +21,11 @@ private:
 public:
     // Constructor
     NegativeCrystalBallDistribution(double range_min, double range_max, std::string outfile,
+    //NegativeCrytalBallDistribution(double range_min, double range_max, std::string outfile,
                                  double x_bar, double sigma, double alpha, double n, double step_size);
 
     // Function to evaluate the PDF at a point x
     double callFunction(double x) override;
-
-    // Method to generate plot data
-    //void NegativeCrystalBallDistribution::computeConstants();
-    //void plotFunction() ;
-    //void plotFunction();
-    //void plotData(std::vector<double> &points, int NBins, bool isdata=true);
 
     // Setters and Getters
     void setXBar(double x_bar);
@@ -41,4 +37,3 @@ public:
     double getAlpha() const;
     double getN() const;
 };
-
