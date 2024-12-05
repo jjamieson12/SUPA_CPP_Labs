@@ -14,7 +14,7 @@ double NormalDistribution::callFunction(double x) {
     return normalizationFactor * exp(exponent);
 }
 
-
+/*
 // Method to generate samples for the normal distribution
 void NormalDistribution::generateSamples(int num_samples) {
     std::ofstream file("Outputs/data/NormalDistributionSamples.txt");
@@ -37,9 +37,12 @@ void NormalDistribution::generateSamples(int num_samples) {
     file.close();
     std::cout << num_samples << " samples generated and written to 'NormalDistributionSamples.txt'.\n";
 }
-
+*/
 // Setters and Getters
 void NormalDistribution::setMean(double mean) { m_mean = mean; }
 void NormalDistribution::setStdDev(double stddev) { m_stddev = stddev; }
+//void NormalDistribution::setStdDev(double stddev) { m_stddev = 2; }
+
 double NormalDistribution::getMean() const { return m_mean; }
 double NormalDistribution::getStdDev() const { return m_stddev; }
+

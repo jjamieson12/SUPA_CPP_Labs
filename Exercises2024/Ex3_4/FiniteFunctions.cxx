@@ -11,8 +11,8 @@ using std::filesystem::path;
 
 //Empty constructor
 FiniteFunction::FiniteFunction(){
-  m_RMin = -20.0;
-  m_RMax = 20.0;
+  m_RMin = -5.0;
+  m_RMax = 5.0;
   this->checkPath("DefaultFunction");
   m_Integral = 0.0;
 }
@@ -62,6 +62,23 @@ double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //
 Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
+/*
+double FiniteFunction::integrate(int Ndiv){ //private}
+  // Changes for fixing the normalisation
+  double width = (m_RMax - m_RMin)/static_cast<double>(Ndiv);
+  double result = 0.0;
+  double xValue = m_RMin + 0.5*width;
+  for (int i = 0; i < Ndiv; i++) {
+    result += this->callFunction(xValue)*width;
+    xValue += width;
+  }
+
+  return result;
+}
+*/
+
+
+
 //double FiniteFunction::integrate(int Ndiv){ //private
   //ToDo write an integrator
 //return -99;  
@@ -100,7 +117,7 @@ std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan)
     double x = m_RMin;
 
     // Ensure the integral is calculated
-    if (m_Integral == NULL) {
+    if (m_Integral == 0.0) {
         std::cout << "Integral not set, doing it now" << std::endl;
         this->integral(Nscan);
         std::cout << "integral: " << m_Integral << ", calculated using " << Nscan << " divisions" << std::endl;
@@ -115,12 +132,12 @@ std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan)
 
     return function_scan;
 }
-
 */
 
 
 
-/*
+
+
 
 /*
 #################
