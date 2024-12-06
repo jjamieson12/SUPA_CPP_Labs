@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+//adding the liberaries
+>>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
 
 #include <random>
 #include <iostream>
@@ -11,8 +15,8 @@ using std::filesystem::path;
 
 //Empty constructor
 FiniteFunction::FiniteFunction(){
-  m_RMin = -20.0;
-  m_RMax = 20.0;
+  m_RMin = -5.0;
+  m_RMax = 5.0;
   this->checkPath("DefaultFunction");
   m_Integral = 0.0;
 }
@@ -62,10 +66,13 @@ double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //
 Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
+
+
 //double FiniteFunction::integrate(int Ndiv){ //private
   //ToDo write an integrator
 //return -99;  
 //}
+
   double FiniteFunction::integrate(int Ndiv) {
   double step = (m_RMax - m_RMin) / Ndiv;
   double m_Integral = 0.0;
@@ -81,6 +88,7 @@ Integration by hand (output needed to normalise function when plotting)
 
     return m_Integral;
 }
+
 double FiniteFunction::integral(int Ndiv) { //public
   if (Ndiv <= 0){
     std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
@@ -93,6 +101,10 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
 
 /*
 #################

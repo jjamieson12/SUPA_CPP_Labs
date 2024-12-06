@@ -52,10 +52,18 @@ vector<double> readDataFromFile(const string& filename) {
 }
 
 int main() {
+    
     // Define the range for the function and output file
+<<<<<<< HEAD
     double range_min = -20.0;
     double range_max = 20.0;
     double step_size = 1.0; 
+=======
+    double range_min = -25.0;
+    double range_max = 25.0;
+    double step_size = 2; 
+    
+>>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
     string output_file = "MysteryPlot";
 
     // Corrected constructor call (using range_min and range_max)
@@ -68,12 +76,12 @@ int main() {
     string filename = "Outputs/data/MysteryData16341.txt";  // Use the correct relative file path
     vector<double> mysteryData = readDataFromFile(filename);
     if (!mysteryData.empty()) {
-        func.plotData(mysteryData, 100, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
+        func.plotData(mysteryData, 80, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
     }
 
     // Plot the Normal Distribution
     double mean = 0.0;
-    double stddev = 1.0;
+    double stddev = 2.0;
     string output_file1 = "NormalDistribution"; //the png plot
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
     normalDist.plotFunction();
@@ -83,12 +91,12 @@ int main() {
      // path
     vector<double> normal = readDataFromFile(filename1);
     if (!normal.empty()) {
-        normalDist.plotData(normal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        normalDist.plotData(normal, 20, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
 
     // Cauchy-Lorentz Distribution
     double x0 = 0.0;   // Location parameter
-    double gamma = 1.0; // Scale parameter
+    double gamma = 2.0; // Scale parameter
     string output_file4 = "CauchyLorentzDistribution";
     CauchyLorentzDistribution cld(range_min, range_max, output_file4, x0, gamma, step_size);
     cld.plotFunction();
@@ -102,7 +110,7 @@ int main() {
 
     // Negative Crystal Ball Distribution
     double x_bar = 0.0;   // Mean
-    double sigma = 1.0;   // Standard deviation
+    double sigma = 2.0;   // Standard deviation
     double alpha = 1.5;   // Transition parameter
     double n = 2.0;       // Tail parameter
     string output_file2 = "NegativeCrystalBallDistribution";
@@ -120,10 +128,11 @@ int main() {
 
     return 0;  // Return 0 to indicate successful execution
 }
-/*
+
 
 // Name: Quratulain Zahoor
 // Date: 19-Nov-2024
+<<<<<<< HEAD
 
 #include "NormalDistribution.h"
 #include "NegativeCrystalBallDistribution.h"
@@ -521,3 +530,5 @@ int main() {
 
   //  return 0;  // Return 0 to indicate successful execution
 //}   // Use the correct relative file path
+=======
+>>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
