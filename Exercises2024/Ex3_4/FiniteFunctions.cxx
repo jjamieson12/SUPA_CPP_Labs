@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 //adding the liberaries
->>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
 
 #include <random>
 #include <iostream>
@@ -12,6 +9,7 @@
 #include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
 
 using std::filesystem::path;
+using namespace std;
 
 //Empty constructor
 FiniteFunction::FiniteFunction(){
@@ -73,39 +71,26 @@ Integration by hand (output needed to normalise function when plotting)
 //return -99;  
 //}
 
-  double FiniteFunction::integrate(int Ndiv) {
+  double FiniteFunction::integral(int Ndiv) {
   double step = (m_RMax - m_RMin) / Ndiv;
   double m_Integral = 0.0;
   
-
+  if (Ndiv <= 0){
+    std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
+    Ndiv = 1000;
+  }
+   m_IntDiv = Ndiv;
     // Apply trapezoidal rule
-  for (int i = 0; i < Ndiv; ++i) {
+  for (int i = 0; i < m_IntDiv; ++i) {
       double x1 = m_RMin + i * step;
       double x2 = m_RMin + (i + 1) * step;
       m_Integral += 0.5 * (this->callFunction(x1) + this->callFunction(x2)) * step;
 
   }
 
-    return m_Integral;
+  return m_Integral;
 }
 
-double FiniteFunction::integral(int Ndiv) { //public
-  if (Ndiv <= 0){
-    std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
-    Ndiv = 1000;
-  }
-  if (m_Integral == 0.0 || Ndiv != m_IntDiv){
-    m_IntDiv = Ndiv;
-    m_Integral = this->integrate(Ndiv);
-    return m_Integral;
-  }
-  else return m_Integral; 
-  
-}
-<<<<<<< HEAD
-=======
-
->>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
 
 /*
 #################
@@ -116,6 +101,7 @@ Sampling task
 // Sampling using the Metropolis algorithm
 
 std::vector<double> FiniteFunction::sampleUsingMetropolis(int num_samples, double sigma) {
+    
     std::vector<double> samples;
     
     // Random number generators for uniform and normal distributions
@@ -155,6 +141,7 @@ std::vector<double> FiniteFunction::sampleUsingMetropolis(int num_samples, doubl
         samples.push_back(xi); // Add the sample (accepted or rejected)
     }
 
+    cout << "This is from parent" << endl;
     return samples;
  }
 
@@ -227,11 +214,12 @@ std::vector< std::pair<double,double> > FiniteFunction::scanFunction(int Nscan){
   //We use the integral to normalise the function points
   if (m_Integral == 0.0) {
     std::cout << "Integral not set, doing it now" << std::endl;
-    this->integral(Nscan);
+    //this->integral(Nscan);
     std::cout << "integral: " << m_Integral << ", calculated using " << Nscan << " divisions" << std::endl;
   }
   //For each scan point push back the x and y values 
   for (int i = 0; i < Nscan; i++){
+    //function_scan.push_back( std::make_pair(x,this->callFunction(x)/m_Integral));
     function_scan.push_back( std::make_pair(x,this->callFunction(x)/m_Integral));
     x += step;
   }

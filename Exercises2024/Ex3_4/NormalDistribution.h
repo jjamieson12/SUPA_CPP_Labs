@@ -15,12 +15,9 @@ public:
      //double sample(int N, double mean);  
     std::vector<std::pair<double, double>> m_samples;
     NormalDistribution(
-        double range_min, double range_max, std::string outfile, double mean = 0.0, double stddev = 1.0, double step_size = 0.1);
-<<<<<<< HEAD
-        
-=======
-       
->>>>>>> f1b6b25 (error in fitting the sampling)
+
+        double range_min, double range_max, std::string outfile, double mean = 0.0, double stddev = 2.0, double step_size = 0.1);
+
     
 
     // Override the callFunction method
@@ -33,6 +30,6 @@ public:
 
     double getMean() const;
     double getStdDev() const;    
-    
+ 
 };
 
