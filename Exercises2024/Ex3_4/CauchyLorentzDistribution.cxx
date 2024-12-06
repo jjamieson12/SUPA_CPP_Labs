@@ -24,15 +24,7 @@ double CauchyLorentzDistribution::callFunction(double x) {
 
     return result;
 }
-/*
-// Override callFunction to implement the Cauchy-Lorentz formula
-double CauchyLorentzDistribution::callFunction(double x) {
-    double numerator = m_gamma;
-    double denominator = M_PI * (m_gamma * m_gamma + std::pow(x - m_x0, 2));
-    
-    return numerator / denominator;
-}
-*/
+
 // Setters and Getters
 void CauchyLorentzDistribution::setLocation(double x0) { 
     m_x0 = x0;

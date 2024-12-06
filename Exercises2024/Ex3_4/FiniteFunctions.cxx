@@ -1,3 +1,5 @@
+//adding the liberaries
+
 #include <random>
 #include <iostream>
 #include <string>
@@ -62,27 +64,13 @@ double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //
 Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
-/*
-double FiniteFunction::integrate(int Ndiv){ //private}
-  // Changes for fixing the normalisation
-  double width = (m_RMax - m_RMin)/static_cast<double>(Ndiv);
-  double result = 0.0;
-  double xValue = m_RMin + 0.5*width;
-  for (int i = 0; i < Ndiv; i++) {
-    result += this->callFunction(xValue)*width;
-    xValue += width;
-  }
-
-  return result;
-}
-*/
-
 
 
 //double FiniteFunction::integrate(int Ndiv){ //private
   //ToDo write an integrator
 //return -99;  
 //}
+
   double FiniteFunction::integrate(int Ndiv) {
   double step = (m_RMax - m_RMin) / Ndiv;
   double m_Integral = 0.0;
@@ -98,6 +86,7 @@ double FiniteFunction::integrate(int Ndiv){ //private}
 
     return m_Integral;
 }
+
 double FiniteFunction::integral(int Ndiv) { //public
   if (Ndiv <= 0){
     std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
@@ -110,33 +99,6 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
-/*
-std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan) {
-    std::vector< std::pair<double, double> > function_scan;
-    double step = (m_RMax - m_RMin) / (double)Nscan;
-    double x = m_RMin;
-
-    // Ensure the integral is calculated
-    if (m_Integral == 0.0) {
-        std::cout << "Integral not set, doing it now" << std::endl;
-        this->integral(Nscan);
-        std::cout << "integral: " << m_Integral << ", calculated using " << Nscan << " divisions" << std::endl;
-    }
-
-    // Scan the function and normalize
-    for (int i = 0; i < Nscan; ++i) {
-        double value = this->callFunction(x) / m_Integral;  // Normalize by the integral
-        function_scan.push_back(std::make_pair(x, value));
-        x += step;
-    }
-
-    return function_scan;
-}
-*/
-
-
-
-
 
 
 /*

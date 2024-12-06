@@ -50,9 +50,9 @@ vector<double> readDataFromFile(const string& filename) {
 int main() {
     
     // Define the range for the function and output file
-    double range_min = -5.0;
-    double range_max = 5.0;
-    double step_size = 1; 
+    double range_min = -25.0;
+    double range_max = 25.0;
+    double step_size = 2; 
     
     string output_file = "MysteryPlot";
 
@@ -66,12 +66,12 @@ int main() {
     string filename = "Outputs/data/MysteryData16341.txt";  // Use the correct relative file path
     vector<double> mysteryData = readDataFromFile(filename);
     if (!mysteryData.empty()) {
-        func.plotData(mysteryData, 20, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
+        func.plotData(mysteryData, 80, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
     }
 
     // Plot the Normal Distribution
     double mean = 0.0;
-    double stddev = 1.0;
+    double stddev = 2.0;
     string output_file1 = "NormalDistribution"; //the png plot
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
     normalDist.plotFunction();
@@ -95,7 +95,7 @@ int main() {
     string filename4 = "Outputs/data/CauchyLorentzDistribution.txt";  // Use the correct relative file path
     vector<double> Cauchy = readDataFromFile(filename4);
     if (!Cauchy.empty()) {
-        cld.plotData(Cauchy, 20, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        cld.plotData(Cauchy, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
 
     // Negative Crystal Ball Distribution
@@ -111,7 +111,7 @@ int main() {
     string filename2 = "Outputs/data/NagetiveCrystalBallDistribution.txt";  // Use the correct relative file path
     vector<double> Crystal = readDataFromFile(filename2);
     if (!Crystal.empty()) {
-        ncbdDist.plotData(Crystal, 20, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        ncbdDist.plotData(Crystal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
         //func.plotSample(mysteryData2, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
