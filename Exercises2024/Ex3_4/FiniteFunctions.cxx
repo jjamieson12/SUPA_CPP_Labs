@@ -99,7 +99,8 @@ double FiniteFunction::integral(int Ndiv) { //public
     m_Integral = this->integrate(Ndiv);
     return m_Integral;
   }
-  else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
+  else return m_Integral; 
+  
 }
 <<<<<<< HEAD
 =======
@@ -113,6 +114,7 @@ Sampling task
 */
 
 // Sampling using the Metropolis algorithm
+
 std::vector<double> FiniteFunction::sampleUsingMetropolis(int num_samples, double sigma) {
     std::vector<double> samples;
     

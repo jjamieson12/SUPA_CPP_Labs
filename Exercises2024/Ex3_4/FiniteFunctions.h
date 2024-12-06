@@ -27,11 +27,11 @@ public:
   virtual void printInfo(); // Dump parameter info about the current function (Overridable)
   virtual double callFunction(double x); // Call the function with value x (Overridable)
   void normalize(int Ndiv); // Normalize the function
-  
+  double m_sample;
+
   double integral(int Ndiv);
    bool metropolisAccept(double current_value, double proposed_value, double sigma);
-
-  std::vector<double> sampleUsingMetropolis(int num_samples, double sigma);
+   std::vector<double> sampleUsingMetropolis(int num_samples, double sigma);
   std::vector<std::pair<double, double>> scanFunction(int Nscan = 1000);
   
   double m_RMin;
@@ -39,14 +39,13 @@ public:
   double m_Integral;
   double m_NormalizationFactor = 1.0;
   int m_IntDiv = 0; // Number of divisions for performing integral
-  
   std::string m_FunctionName;
   std::string m_OutData; // Output filename for data
   std::string m_OutPng; // Output filename for plot
   std::vector<std::pair<double, double>> m_data; // Input data points
-  std::vector<std::pair<double, double>> m_samples; // Randomly sampled data
+  //std::vector<std::pair<double, double>> m_samples; // Randomly sampled data
   std::vector<std::pair<double, double>> m_function_scan; // Data from scanFunction
-  
+ 
   bool m_plotfunction = true; // Flag to determine whether to plot function
   bool m_plotdatapoints = true; // Flag to determine whether to plot input data
   bool m_plotsamplepoints = true; // Flag to determine whether to plot sampled data
@@ -56,13 +55,16 @@ public:
   void generatePlot(Gnuplot &gp); 
   
   double invxsquared(double x); // Default functional form
+
+  public:
+    // Random number generation
+    std::random_device rd;
+    std::mt19937 gen; // Random number generator
+    std::uniform_real_distribution<double> uniform_dist; 
+    std::normal_distribution<double> normal_dist; 
+    //std::vector<double> m_samples;
+    std::vector<std::pair<double, double>> m_samples;
   
-public:
-  std::random_device rd;
-  std::mt19937 gen; // Random number generator
-  
-  std::uniform_real_distribution<double> uniform_dist; // Uniform distribution
- // std::normal_distribution<double> normal_dist; // Normal distribution
   
 };
 

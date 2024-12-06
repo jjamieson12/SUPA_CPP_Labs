@@ -84,6 +84,7 @@ int main() {
     double stddev = 2.0;
     string output_file1 = "NormalDistribution"; //the png plot
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
+    std::vector<double> samples = normalDist.sample(10000, 0.5);
     normalDist.plotFunction();
 
     // Read and plot Normal Distribution data

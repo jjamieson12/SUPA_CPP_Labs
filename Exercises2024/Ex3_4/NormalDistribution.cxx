@@ -5,6 +5,7 @@
 #include <iostream>
 
 // Constructor
+ 
 NormalDistribution::NormalDistribution(double range_min, double range_max, std::string outfile, double mean, double stddev, double step_size)
     : FiniteFunction(range_min, range_max, outfile), m_mean(mean), m_stddev(stddev), m_step_size(step_size) {}
 
@@ -23,7 +24,16 @@ double NormalDistribution::callFunction(double x) {
     
 }
 
+<<<<<<< HEAD
 >>>>>>> 26820fc087cc052807e3749fc049cc2effb02692
+=======
+  //double evaluate(double x) const;
+    std::vector<double> sample(int num_samples, double sigma) {
+        std::vector<double> samples;
+       return samples;
+    }
+
+>>>>>>> f1b6b25 (error in fitting the sampling)
 // Setters and Getters
 void NormalDistribution::setMean(double mean) { m_mean = mean; }
 void NormalDistribution::setStdDev(double stddev) { m_stddev = stddev; }
