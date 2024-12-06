@@ -1,4 +1,3 @@
-
 // Name: Quratulain Zahoor
 // Date: 19-Nov-2024
 
@@ -55,9 +54,9 @@ int main() {
 
     
     // Define the range for the function and output file
-    double range_min = -25.0;
-    double range_max = 25.0;
-    double step_size = 2; 
+    double range_min = -15.0;
+    double range_max = 15.0;
+    double step_size = 0.1; 
     
     string output_file = "MysteryPlot";
 
@@ -71,12 +70,12 @@ int main() {
     string filename = "Outputs/data/MysteryData16341.txt";  // Use the correct relative file path
     vector<double> mysteryData = readDataFromFile(filename);
     if (!mysteryData.empty()) {
-        func.plotData(mysteryData, 80, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
+        func.plotData(mysteryData, 50, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
     }
 
     // Plot the Normal Distribution
     double mean = 0.0;
-    double stddev = 2.0;
+    double stddev = 3.0;
     string output_file1 = "NormalDistribution"; //the png plot
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
     
@@ -87,9 +86,9 @@ int main() {
     
 
     // Read and plot Normal Distribution data
-    string filename1 = "Outputs/data/NormalDistribution.txt"; 
+    //string filename1 = "Outputs/data/NormalDistribution.txt"; 
      // path
-    vector<double> normal = readDataFromFile(filename1);
+    vector<double> normal = readDataFromFile(filename);
     if (!normal.empty()) {
         normalDist.plotData(normal, 20, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
@@ -102,8 +101,8 @@ int main() {
     cld.plotFunction();
 
     // Read and plot Cauchy-Lorentz Distribution data
-    string filename4 = "Outputs/data/CauchyLorentzDistribution.txt";  // Use the correct relative file path
-    vector<double> Cauchy = readDataFromFile(filename4);
+    //string filename4 = "Outputs/data/CauchyLorentzDistribution.txt";  // Use the correct relative file path
+    vector<double> Cauchy = readDataFromFile(filename);
     if (!Cauchy.empty()) {
         cld.plotData(Cauchy, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
@@ -118,8 +117,8 @@ int main() {
     ncbdDist.plotFunction();
 
     // Read and plot Negative Crystal Ball Distribution data
-    string filename2 = "Outputs/data/NagetiveCrystalBallDistribution.txt";  // Use the correct relative file path
-    vector<double> Crystal = readDataFromFile(filename2);
+   // string filename2 = "Outputs/data/NagetiveCrystalBallDistribution.txt";  // Use the correct relative file path
+    vector<double> Crystal = readDataFromFile(filename);
     if (!Crystal.empty()) {
         ncbdDist.plotData(Crystal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
         //func.plotSample(mysteryData2, 100, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
@@ -130,7 +129,3 @@ int main() {
 
     return 0;  // Return 0 to indicate successful execution
 }
-
-
-// Name: Quratulain Zahoor
-// Date: 19-Nov-2024

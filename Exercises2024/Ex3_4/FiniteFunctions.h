@@ -1,4 +1,5 @@
 
+
 #include <string>
 #include <vector>
 #include <random>
@@ -27,6 +28,7 @@ public:
   void normalize(int Ndiv); // Normalize the function
   double m_sample;
 
+  double integrate(int Ndiv);
   double integral(int Ndiv);
    bool metropolisAccept(double current_value, double proposed_value, double sigma);
    std::vector<double> sampleUsingMetropolis(int num_samples, double sigma);
