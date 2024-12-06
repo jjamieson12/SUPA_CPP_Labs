@@ -1,10 +1,10 @@
+
 #include <random>
 #include <iostream>
 #include <string>
 #include <vector>
 #include "FiniteFunctions.h"
 #include <filesystem> //To check extensions in a nice way
-
 #include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
 
 using std::filesystem::path;
@@ -93,34 +93,6 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
-/*
-std::vector< std::pair<double, double> > FiniteFunction::scanFunction(int Nscan) {
-    std::vector< std::pair<double, double> > function_scan;
-    double step = (m_RMax - m_RMin) / (double)Nscan;
-    double x = m_RMin;
-
-    // Ensure the integral is calculated
-    if (m_Integral == NULL) {
-        std::cout << "Integral not set, doing it now" << std::endl;
-        this->integral(Nscan);
-        std::cout << "integral: " << m_Integral << ", calculated using " << Nscan << " divisions" << std::endl;
-    }
-
-    // Scan the function and normalize
-    for (int i = 0; i < Nscan; ++i) {
-        double value = this->callFunction(x) / m_Integral;  // Normalize by the integral
-        function_scan.push_back(std::make_pair(x, value));
-        x += step;
-    }
-
-    return function_scan;
-}
-
-*/
-
-
-
-/*
 
 /*
 #################

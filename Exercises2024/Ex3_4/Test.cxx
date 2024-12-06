@@ -1,3 +1,7 @@
+
+// Name: Quratulain Zahoor
+// Date: 19-Nov-2024
+
 #include "NormalDistribution.h"
 #include "NegativeCrystalBallDistribution.h"
 #include "CauchyLorentzDistribution.h"
@@ -5,8 +9,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "FiniteFunctions.h"  // 
-#include <filesystem>  // 
+#include "FiniteFunctions.h"  
+#include <filesystem>   
 
 using namespace std;
 
@@ -51,7 +55,7 @@ int main() {
     // Define the range for the function and output file
     double range_min = -20.0;
     double range_max = 20.0;
-    double step_size = 0.1; 
+    double step_size = 1.0; 
     string output_file = "MysteryPlot";
 
     // Corrected constructor call (using range_min and range_max)
@@ -120,6 +124,7 @@ int main() {
 
 // Name: Quratulain Zahoor
 // Date: 19-Nov-2024
+
 #include "NormalDistribution.h"
 #include "NegativeCrystalBallDistribution.h"
 #include "CauchyLorentzDistribution.h"

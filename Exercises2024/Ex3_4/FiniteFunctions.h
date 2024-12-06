@@ -1,3 +1,6 @@
+
+
+
 #include <string>
 #include <vector>
 #include <random>
@@ -5,9 +8,7 @@
 #pragma once // Replacement for IFNDEF
 
 class FiniteFunction {
-
 public:
-
   FiniteFunction(); // Empty constructor
   FiniteFunction(double range_min, double range_max, std::string outfile); // Variable constructor
   ~FiniteFunction(); // Destructor
