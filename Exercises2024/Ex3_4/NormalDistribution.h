@@ -16,7 +16,7 @@ public:
     std::vector<std::pair<double, double>> m_samples;
     NormalDistribution(
 
-        double range_min, double range_max, std::string outfile, double mean = 0.0, double stddev = 3.0, double step_size = 0.1);
+        double range_min, double range_max, std::string outfile, double mean = 1.0, double stddev = 3.0, double step_size = 0.1);
 
     
 

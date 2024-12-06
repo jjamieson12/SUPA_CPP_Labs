@@ -74,8 +74,8 @@ int main() {
     }
 
     // Plot the Normal Distribution
-    double mean = 0.0;
-    double stddev = 3.0;
+    double mean = 2.2;
+    double stddev = 2.0;
     string output_file1 = "NormalDistribution"; //the png plot
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
     
@@ -90,12 +90,12 @@ int main() {
      // path
     vector<double> normal = readDataFromFile(filename);
     if (!normal.empty()) {
-        normalDist.plotData(normal, 20, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        normalDist.plotData(normal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
     }
 
     // Cauchy-Lorentz Distribution
-    double x0 = 0.0;   // Location parameter
-    double gamma = 2.0; // Scale parameter
+    double x0 = 2.7;   // Location parameter ,removing it from 0.0
+    double gamma = 1.8; // Scale parameter
     string output_file4 = "CauchyLorentzDistribution";
     CauchyLorentzDistribution cld(range_min, range_max, output_file4, x0, gamma, step_size);
     cld.plotFunction();
@@ -108,9 +108,9 @@ int main() {
     }
 
     // Negative Crystal Ball Distribution
-    double x_bar = 0.0;   // Mean
+    double x_bar = 3.0;   // Mean
     double sigma = 2.0;   // Standard deviation
-    double alpha = 1.5;   // Transition parameter
+    double alpha = 2.0;   // Transition parameter
     double n = 2.0;       // Tail parameter
     string output_file2 = "NegativeCrystalBallDistribution";
     NegativeCrystalBallDistribution ncbdDist(range_min, range_max, output_file2, x_bar, sigma, alpha, n, step_size);

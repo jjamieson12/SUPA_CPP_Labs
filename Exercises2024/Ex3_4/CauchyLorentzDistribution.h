@@ -23,7 +23,7 @@ public:
 
     // Setters and Getters
     void setLocation(double x0);
-    void setScale(double gamma= 2.0);
+    void setScale(double gamma= 1.8);
     double getLocation() const;
     double getScale() const;
 };

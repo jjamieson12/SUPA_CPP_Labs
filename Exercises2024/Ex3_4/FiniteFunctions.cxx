@@ -190,13 +190,13 @@ void FiniteFunction::plotData(std::vector<double> &points, int Nbins, bool isdat
   if (isdata){
     m_data = this->makeHist(points,Nbins);
     m_plotdatapoints = true;
-    m_samples = this->makeHist(points,Nbins);
-    m_plotsamplepoints = true;
+   // m_samples = this->makeHist(points,Nbins);
+   // m_plotsamplepoints = true;
   }
   else{
     std::cout<<"No data to produce sample"<<std::endl;
-   // m_samples = this->makeHist(points,Nbins);
-   // m_plotsamplepoints = true;
+    m_samples = this->makeHist(points,Nbins);
+    m_plotsamplepoints = true;
   }
 }
 

@@ -48,7 +48,7 @@ public:
  
   bool m_plotfunction = true; // Flag to determine whether to plot function
   bool m_plotdatapoints = true; // Flag to determine whether to plot input data
-  bool m_plotsamplepoints = true; // Flag to determine whether to plot sampled data
+  bool m_plotsamplepoints = false; // Flag to determine whether to plot sampled data
 
   std::vector<std::pair<double, double>> makeHist(std::vector<double> &points, int Nbins); // Helper function for histogram
   void checkPath(std::string outstring); // Helper function to ensure data and PNG paths are correct
