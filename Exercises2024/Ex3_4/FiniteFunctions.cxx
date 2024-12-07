@@ -104,50 +104,78 @@ double FiniteFunction::integral(int Ndiv) { //public
 Sampling task
 #################
 */
-
-// Sampling using the Metropolis algorithm
-std::vector<double> FiniteFunction::sampleUsingMetropolis(int num_samples, double sigma) {
+// Sampling using Metropolis algorithm
+std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     std::vector<double> samples;
-    
-    // Random number generators for uniform and normal distributions
+
+    // Random number generator setup
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> uniform_dist(m_RMin, m_RMax); 
-    // Uniform distribution between m_RMin and m_RMax
-    std::normal_distribution<double> normal_dist(0.0, sigma); 
-    // Gaussian noise with mean 0 and std dev sigma
+    std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax); // Uniform distribution for xi
+    std::normal_distribution<> normal_dist(0.0, sigma);  // Normal distribution for proposal
 
-    // Initial sample
-    double xi = uniform_dist(gen);
-    samples.push_back(xi); // Add the initial sample
+    // Initialize the first sample randomly from uniform distribution
+    double current_sample = uniform_dist(gen);
+    
+    // Open the file to write the sampled data
+    std::ofstream output_file("Outputs/data/sampling_data.txt");
 
-    for (int i = 1; i < num_samples; ++i) {
-        // Propose a new sample using a Gaussian distribution centered around the current sample
-        double y = xi + normal_dist(gen);
-        
-        // Ensure the new sample is within bounds
-        if (y < m_RMin) y = m_RMin;
-        if (y > m_RMax) y = m_RMax;
-
-        // Calculate the acceptance ratio
-        double f_xi = this->callFunction(xi);
-        double f_y = this->callFunction(y);
-        double A = std::min(f_y / f_xi, 1.0); // Metropolis acceptance criterion
-
-        // Generate a random number between 0 and 1
-        std::uniform_real_distribution<double> acceptance_dist(0.0, 1.0);
-        double T = acceptance_dist(gen);
-
-        // Accept or reject the new sample
-        if (T < A) {
-            xi = y; // Accept the new sample
-        }
-        
-        samples.push_back(xi); // Add the sample (accepted or rejected)
+    if (!output_file) {
+        std::cerr << "Error opening file for writing!" << std::endl;
+        return samples;
     }
 
+    // Sample using the Metropolis algorithm
+    for (int i = 0; i < num_samples; ++i) {
+        // Propose a new sample y from normal distribution centered at current_sample
+        double proposal = current_sample + normal_dist(gen);
+
+        // Ensure the proposal stays within the valid range
+        if (proposal < m_RMin) proposal = m_RMin;
+        if (proposal > m_RMax) proposal = m_RMax;
+
+        // Calculate the acceptance ratio A
+        double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
+
+
+       
+        // Generate a random number T between 0 and 1
+        double T = uniform_dist(gen);
+        
+        std::cout << "T=" << T << std::endl;
+
+
+        // Accept or reject the new proposal
+        if (T < A) {
+            current_sample = proposal;
+        }
+
+        // Store the accepted sample
+        samples.push_back(current_sample);
+
+        // Write the x (sampled) and y (function value) to the output file
+        double y_value = callFunction(current_sample);
+        output_file << current_sample << ", " << y_value << "\n";
+        
+                
+
+        
+
+    }
+
+    // Close the output file
+    output_file.close();
+
     return samples;
- }
+}
+
+
+
+    
+
+  
+
+
 
 
  /*
@@ -191,7 +219,7 @@ void FiniteFunction::plotData(std::vector<double> &points, int Nbins, bool isdat
     m_data = this->makeHist(points,Nbins);
     m_plotdatapoints = true;
    // m_samples = this->makeHist(points,Nbins);
-   // m_plotsamplepoints = true;
+   // m_plotsamplepoints = false;
   }
   else{
     std::cout<<"No data to produce sample"<<std::endl;
@@ -306,9 +334,9 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
   else if (m_plotsamplepoints == true){
     gp << "set terminal pngcairo\n";
     gp << "set output 'Outputs/png/"<<m_FunctionName<<".png'\n"; 
-    gp << "set xrange ["<<m_RMin<<":"<<m_RMax<<"]\n";
+    gp << "set xrange ["<<-15.0<<":"<<15.0<<"]\n";
     gp << "plot '-' with points ps 2 lc rgb 'blue' title 'sampled data'\n";
-    gp.send1d(m_samples);
+    gp.send1d(m_samples); //replaced with m_samples 
   }
 }
 

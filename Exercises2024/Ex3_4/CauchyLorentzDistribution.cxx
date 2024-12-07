@@ -1,3 +1,5 @@
+
+
 #include "CauchyLorentzDistribution.h"
 #include <cmath>
 #include <iostream>
@@ -13,14 +15,14 @@ double CauchyLorentzDistribution::callFunction(double x) {
     double numerator = m_gamma;
     double denominator = M_PI * (m_gamma * m_gamma + std::pow(x - m_x0, 2));
 
-    // Print intermediate values for debugging
-    std::cout << "x: " << x << ", m_gamma: " << m_gamma << ", m_x0: " << m_x0 << "\n";
-    std::cout << "Numerator: " << numerator << ", Denominator: " << denominator << "\n";
+    // Print intermediate values for debugging, you can cross check it later 
+  //  std::cout << "x: " << x << ", m_gamma: " << m_gamma << ", m_x0: " << m_x0 << "\n";
+   // std::cout << "Numerator: " << numerator << ", Denominator: " << denominator << "\n";
 
     double result = numerator / denominator;
 
     // Print the result
-    std::cout << "Result: " << result << "\n";
+   // std::cout << "Result: " << result << "\n";
 
     return result;
 }

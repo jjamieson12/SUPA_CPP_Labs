@@ -1,5 +1,4 @@
-//#ifndef NORMALDISTRIBUTION_H
-//#define NORMALDISTRIBUTION_H
+
 #pragma once
 #include <string>
 #include "FiniteFunctions.h"
@@ -18,13 +17,13 @@ public:
 
         double range_min, double range_max, std::string outfile, double mean = 1.0, double stddev = 3.0, double step_size = 0.1);
 
-    
+
 
     // Override the callFunction method
     double callFunction(double x) override;
-     std::vector<double> sample(int num_samples, double sigma);
+    // std::vector<double> sample(int num_samples, double sigma);
 
-    // Optional: Provide methods to set/get mean and standard deviation
+    
     void setMean(double mean);
     void setStdDev(double stddev);
 

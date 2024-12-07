@@ -6,11 +6,11 @@
 
 // Constructor
 NegativeCrystalBallDistribution::NegativeCrystalBallDistribution(double range_min, double range_max, std::string outfile,
-                                                                 double x_bar, double sigma, double alpha, double n, double step_size)
+                                                                 double x_bar, double sigma1, double alpha, double n, double step_size)
      //: FiniteFunction(range_min, range_max, outfile), m_mean(mean), m_stddev(stddev), m_step_size(step_size) {}
 
     : FiniteFunction(range_min, range_max, outfile),
-      m_x_bar(x_bar), m_sigma(sigma), m_alpha(alpha), m_n(n), m_step_size(step_size){ 
+      m_x_bar(x_bar), m_sigma(sigma1), m_alpha(alpha), m_n(n), m_step_size(step_size){ 
     if (alpha <= 0 || n <= 1)
         throw std::invalid_argument("Alpha must be > 0 and n must be > 1");
     computeConstants();

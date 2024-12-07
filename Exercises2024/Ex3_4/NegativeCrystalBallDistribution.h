@@ -22,14 +22,14 @@ public:
     // Constructor
     NegativeCrystalBallDistribution(double range_min, double range_max, std::string outfile,
     //NegativeCrytalBallDistribution(double range_min, double range_max, std::string outfile,
-                                 double x_bar, double sigma, double alpha, double n, double step_size);
+                                 double x_bar, double sigma1, double alpha, double n, double step_size);
 
     // Function to evaluate the PDF at a point x
     double callFunction(double x) override;
 
     // Setters and Getters
     void setXBar(double x_bar);
-    void setSigma(double sigma);
+    void setSigma(double sigma1);
     void setAlpha(double alpha);
     void setN(double n);
     double getXBar() const;

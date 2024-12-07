@@ -1,3 +1,5 @@
+
+
 // Name: Quratulain Zahoor
 // Date: 19-Nov-2024
 
@@ -10,6 +12,7 @@
 #include <string>
 #include "FiniteFunctions.h"  
 #include <filesystem>  
+
 
 using namespace std;
 
@@ -51,48 +54,38 @@ vector<double> readDataFromFile(const string& filename) {
 }
 
 int main() {
-
-    
-    // Define the range for the function and output file
-    double range_min = -15.0;
+     double range_min = -15.0;
     double range_max = 15.0;
     double step_size = 0.1; 
+    int num_samples = 500;
+    double proposal_stddev = 2.0;
+    std::string filename = "Outputs/data/MysteryData16341.txt"; 
+    std::string sample_filename = "Outputs/data/normalDist_Sample_data.txt"; 
+
     
     string output_file = "MysteryPlot";
 
-    // Corrected constructor call (using range_min and range_max)
-    FiniteFunction func(range_min, range_max, output_file);
-
-    // Plot the function f(x) = 1 / (1 + x^2)
-    func.plotFunction();
-
-    // Read and plot mystery data for "MysteryPlot"
-    string filename = "Outputs/data/MysteryData16341.txt";  // Use the correct relative file path
-    vector<double> mysteryData = readDataFromFile(filename);
-    if (!mysteryData.empty()) {
-        func.plotData(mysteryData, 50, true);  // Use 100 bins for histogram-like plotting, setting 'true' for data
-    }
-
+ 
     // Plot the Normal Distribution
+        std::cout << "Checking Normal Distributions..." << std::endl;
     double mean = 2.2;
     double stddev = 2.0;
     string output_file1 = "NormalDistribution"; //the png plot
-    NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
     
-    //auto samples = normalDist.sampleUsingMetropolis(500, 2.0);
-    //double integral = normalDist.integral(200);
+
+    NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev);
+    std::vector<double> sampled_data = normalDist.sample(num_samples, proposal_stddev);
     normalDist.plotFunction();
     cout << "Checking Normal Distributions..." << endl;
-    
+    //vector<double> normal = readDataFromFile(filename);
 
-    // Read and plot Normal Distribution data
-    //string filename1 = "Outputs/data/NormalDistribution.txt"; 
-     // path
     vector<double> normal = readDataFromFile(filename);
     if (!normal.empty()) {
-        normalDist.plotData(normal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+      normalDist.plotData(normal, 50, true);  
     }
+    
 
+    
     // Cauchy-Lorentz Distribution
     double x0 = 2.7;   // Location parameter ,removing it from 0.0
     double gamma = 1.8; // Scale parameter
@@ -100,7 +93,7 @@ int main() {
     CauchyLorentzDistribution cld(range_min, range_max, output_file4, x0, gamma, step_size);
     cld.plotFunction();
 
-    // Read and plot Cauchy-Lorentz Distribution data
+
     //string filename4 = "Outputs/data/CauchyLorentzDistribution.txt";  // Use the correct relative file path
     vector<double> Cauchy = readDataFromFile(filename);
     if (!Cauchy.empty()) {
@@ -109,11 +102,11 @@ int main() {
 
     // Negative Crystal Ball Distribution
     double x_bar = 3.0;   // Mean
-    double sigma = 2.0;   // Standard deviation
+    double sigma1 = 2.0;   // Standard deviation./
     double alpha = 2.0;   // Transition parameter
     double n = 2.0;       // Tail parameter
     string output_file2 = "NegativeCrystalBallDistribution";
-    NegativeCrystalBallDistribution ncbdDist(range_min, range_max, output_file2, x_bar, sigma, alpha, n, step_size);
+    NegativeCrystalBallDistribution ncbdDist(range_min, range_max, output_file2, x_bar, sigma1, alpha, n, step_size);
     ncbdDist.plotFunction();
 
     // Read and plot Negative Crystal Ball Distribution data

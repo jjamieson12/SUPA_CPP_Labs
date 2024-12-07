@@ -26,6 +26,9 @@ public:
     void setScale(double gamma= 1.8);
     double getLocation() const;
     double getScale() const;
+    
+
+    
 };
 
 
