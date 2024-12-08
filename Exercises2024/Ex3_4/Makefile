@@ -1,9 +1,12 @@
+##this is the Makefile, we can set the compilation stuff 
+
+
 CC = g++               # Compiler
 FLAGS = -std=c++20     # Compiler flags
 TARGET = Test          # Output binary
 OBJECTS = Test.o FiniteFunctions.o NormalDistribution.o NegativeCrystalBallDistribution.o CauchyLorentzDistribution.o
-LIBS=-I ../../GNUplot/ -lboost_iostreams
-#INCLUDES = -I ../../GNUplot
+LIBS=-I ../../GNUplot/ -lboost_iostreams #for GNU plotting 
+#INCLUDES = -I ../../GNUplot 
 #LIBS = -lboost_iostreams
 ${TARGET}: ${OBJECTS}
 	@echo "Linking..."
@@ -11,7 +14,7 @@ ${TARGET}: ${OBJECTS}
 	@make clean
 
 Test.o: Test.cxx FiniteFunctions.h NormalDistribution.h NegativeCrystalBallDistribution.h CauchyLorentzDistribution.h
-	${CC} ${FLAGS} ${LIBS} -c Test.cxx
+	${CC} ${FLAGS} ${LIBS} -c Test.cxx  
 
 FiniteFunctions.o: FiniteFunctions.cxx FiniteFunctions.h
 	${CC} ${FLAGS} ${LIBS} -c FiniteFunctions.cxx 
