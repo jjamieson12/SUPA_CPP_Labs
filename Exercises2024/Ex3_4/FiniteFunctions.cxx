@@ -11,7 +11,9 @@
 using std::filesystem::path;
 
 //Empty constructor
+
 FiniteFunction::FiniteFunction(){
+
   m_RMin = -5.0;
   m_RMax = 5.0;
   this->checkPath("DefaultFunction");
@@ -165,6 +167,7 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     return samples;
 }
 */
+//here i am not very clear do you want us to generate the gussiandistribution sample or not 
 // this will generate one sample data file for one dimensional data 
 std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     std::vector<double> samples;  // To store the accepted samples
@@ -256,7 +259,6 @@ void FiniteFunction::printInfo(){
 void FiniteFunction::plotFunction(){
   m_function_scan = this->scanFunction(10000);
   m_plotfunction = true;
-  m_plotsamplepoints = true;
 }
 
 //Transform data points into a format gnuplot can use (histogram) and set flag to enable drawing of data to output plot

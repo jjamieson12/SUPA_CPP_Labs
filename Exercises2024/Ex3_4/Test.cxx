@@ -63,8 +63,8 @@ int main() {
     double range_min = -15.0;  
     double range_max = 15.0;
     double step_size = 0.1; 
-    int num_samples = 500;
-    double proposal_stddev = 2.0;
+    int num_samples = 2000;
+    double proposal_stddev = 0.001;
     std::string filename = "Outputs/data/MysteryData16341.txt";  
     std::string sample_filename = "Outputs/data/sampled_data.txt";  //try to see if you can plot the sampling  
 
@@ -77,6 +77,11 @@ int main() {
      vector<double> Mystry = readDataFromFile(sample_filename); // taking the myster data
     if (!Mystry.empty()) {
      funct.plotData(Mystry, 50, false);   //50 : NBins and data points set true
+    }
+    //plotting the data as well
+    vector<double> datapoints = readDataFromFile(filename); // taking the myster data
+    if (!datapoints.empty()) {
+     funct.plotData(datapoints, 50, true);   //50 : NBins and data points set true
     }
 
     cout << "This is default function ..." << endl;
@@ -91,15 +96,6 @@ int main() {
         std::cout << sample << std::endl;
     }
 
-// Print sampled values
-    //for (const auto& value : sampled_data) {
-    //std::cout << value << std::endl;
- //}
-
-    //vector<double> Mystery = readDataFromFile(filename);
-    //if (!Mystery.empty()) {
-     // funct.plotData(Mystery, 50, true);  
-    //}
     
  
     // Plot the Normal Distribution
@@ -115,7 +111,10 @@ int main() {
     if (!normal.empty()) {
       normalDist.plotData(normal, 50, true);   //50 : NBins and data points set true
     }
-    
+     vector<double> normalsample = readDataFromFile(sample_filename); // taking the myster data
+    if (!normalsample.empty()) {
+     normalDist.plotData(normalsample, 50, false);   //50 : NBins and data points set true
+    }
 
     // This section is CauchyLorentzDistribution 
     double x0 = 2.7;   // Location parameter ,removing it from 0.0
@@ -126,6 +125,10 @@ int main() {
     vector<double> Cauchy = readDataFromFile(filename);
     if (!Cauchy.empty()) {
         cld.plotData(Cauchy, 50, true);      //plotting the Cauchy function
+    }
+    vector<double> Cauchysample = readDataFromFile(sample_filename);
+    if (!Cauchysample.empty()) {
+        cld.plotData(Cauchysample, 50, false);      //plotting the Cauchy function
     }
    //This section is for NegativeCrystalBallDistribution 
     double x_bar = 3.0;   //mean value, i adjusted it to fit 
@@ -141,6 +144,12 @@ int main() {
         ncbdDist.plotData(Crystal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
+    vector<double> Crystalsample = readDataFromFile(sample_filename);
+    if (!Crystalsample.empty()) {
+        ncbdDist.plotData(Crystalsample, 50, false);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+
+    }
+
 
     std::cout<< "Successful: you can see the plot inside the Output/data directories"<<std::endl;
 
