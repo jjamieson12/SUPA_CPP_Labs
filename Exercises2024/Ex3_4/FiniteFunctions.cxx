@@ -1,12 +1,12 @@
-//adding the liberaries
+//adding the libararies
 
 #include <random>
 #include <iostream>
 #include <string>
 #include <vector>
 #include "FiniteFunctions.h"
-#include <filesystem> //To check extensions in a nice way
-#include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
+#include <filesystem> //checking the extension
+#include "gnuplot-iostream.h" //Needed to produce plots (not part of the course)
 
 using std::filesystem::path;
 
@@ -55,6 +55,7 @@ double FiniteFunction::rangeMax() {return m_RMax;};
 //Function eval
 ###################
 */ 
+// This is default function
 double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
 double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
 
@@ -70,12 +71,13 @@ Integration by hand (output needed to normalise function when plotting)
 //return -99;  
 //}
 
+// Here i used the trapozoidal rule for normalization function
   double FiniteFunction::integrate(int Ndiv) {
   double step = (m_RMax - m_RMin) / Ndiv;
   double m_Integral = 0.0;
   
 
-    // Apply trapezoidal rule
+    // applying the rule
   for (int i = 0; i < Ndiv; ++i) {
       double x1 = m_RMin + i * step;
       double x2 = m_RMin + (i + 1) * step;
@@ -83,10 +85,10 @@ Integration by hand (output needed to normalise function when plotting)
 
   }
 
-    return m_Integral;
+    return m_Integral; 
 }
 
-double FiniteFunction::integral(int Ndiv) { //public
+double FiniteFunction::integral(int Ndiv) { 
   if (Ndiv <= 0){
     std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
     Ndiv = 1000;
@@ -104,79 +106,62 @@ double FiniteFunction::integral(int Ndiv) { //public
 Sampling task
 #################
 */
-// Sampling using Metropolis algorithm
+// using the metrppolis algorithm for sampling
 std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     std::vector<double> samples;
 
-    // Random number generator setup
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax); // Uniform distribution for xi
-    std::normal_distribution<> normal_dist(0.0, sigma);  // Normal distribution for proposal
-
-    // Initialize the first sample randomly from uniform distribution
-    double current_sample = uniform_dist(gen);
-    
-    // Open the file to write the sampled data
+  // generating the random number 
+     std::random_device rd; 
+    std::mt19937 gen (rd());
+    std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax); 
+    //uniform distribution for xi 
+    std::normal_distribution<> normal_dist(0.0, sigma);  
+    // Normal distribution for proposal
+    double current_sample = uniform_dist(gen); //initialiazation of first sample for uniform distribution
+    // I made this check to make sure that i can get my samling data
+    // open the file to write the samplinf data , check the Output/data
+    /*
     std::ofstream output_file("Outputs/data/sampling_data.txt");
-
+   // if file is not craeted then
     if (!output_file) {
-        std::cerr << "Error opening file for writing!" << std::endl;
+        std::cerr << "Unable to write into the file!" << std::endl;
         return samples;
     }
-
-    // Sample using the Metropolis algorithm
+*/
+    // Sample using the Metropolis algorithm, i put num_samples = 500 to get the allignment with data
     for (int i = 0; i < num_samples; ++i) {
-        // Propose a new sample y from normal distribution centered at current_sample
+        //proposed a new sample y, normal distribution centered at current samples
         double proposal = current_sample + normal_dist(gen);
 
-        // Ensure the proposal stays within the valid range
+        //setting the valid range for the proposal
         if (proposal < m_RMin) proposal = m_RMin;
         if (proposal > m_RMax) proposal = m_RMax;
 
         // Calculate the acceptance ratio A
         double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
-
-
-       
-        // Generate a random number T between 0 and 1
+       //genearting T between 0 and 1
         double T = uniform_dist(gen);
-        
+        // printing the T values 
         std::cout << "T=" << T << std::endl;
-
-
-        // Accept or reject the new proposal
+        //selection section
         if (T < A) {
             current_sample = proposal;
         }
 
-        // Store the accepted sample
+        // will store only the selected samples 
         samples.push_back(current_sample);
 
-        // Write the x (sampled) and y (function value) to the output file
-        double y_value = callFunction(current_sample);
-        output_file << current_sample << ", " << y_value << "\n";
+        // writing the values to the file here
+       // double y_value = callFunction(current_sample);
+       // output_file << current_sample << ", " << y_value << "\n";
         
-                
-
-        
-
     }
 
     // Close the output file
-    output_file.close();
+    //output_file.close();  
 
     return samples;
 }
-
-
-
-    
-
-  
-
-
-
 
  /*
 ###################
@@ -218,8 +203,8 @@ void FiniteFunction::plotData(std::vector<double> &points, int Nbins, bool isdat
   if (isdata){
     m_data = this->makeHist(points,Nbins);
     m_plotdatapoints = true;
-   // m_samples = this->makeHist(points,Nbins);
-   // m_plotsamplepoints = false;
+    m_samples = this->makeHist(points,Nbins); //need to recheck again 
+    m_plotsamplepoints = true;
   }
   else{
     std::cout<<"No data to produce sample"<<std::endl;
