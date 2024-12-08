@@ -66,20 +66,41 @@ int main() {
     int num_samples = 500;
     double proposal_stddev = 2.0;
     std::string filename = "Outputs/data/MysteryData16341.txt";  
+    std::string sample_filename = "Outputs/data/sampled_data.txt";  //try to see if you can plot the sampling  
+
+
     // this is our data file generated from GenerateRandomData
     
     string output_file = "MysteryPlot";
-    NormalDistribution funct(range_min, range_max, output_file);
-    
+    FiniteFunction funct(range_min, range_max, output_file);
     funct.plotFunction();
-    cout << "This is default function ..." << endl;
-    
-
-    vector<double> Mystery = readDataFromFile(filename);
-    if (!Mystery.empty()) {
-      funct.plotData(Mystery, 50, true);  
+     vector<double> Mystry = readDataFromFile(sample_filename); // taking the myster data
+    if (!Mystry.empty()) {
+     funct.plotData(Mystry, 50, false);   //50 : NBins and data points set true
     }
 
+    cout << "This is default function ..." << endl;
+    FiniteFunction function;
+   
+   double sigma = 2.0;
+   
+      std::vector<double> sampled_data = function.sample(num_samples, sigma);
+
+    // Optionally, print the sampled data
+    for (const auto& sample : sampled_data) {
+        std::cout << sample << std::endl;
+    }
+
+// Print sampled values
+    //for (const auto& value : sampled_data) {
+    //std::cout << value << std::endl;
+ //}
+
+    //vector<double> Mystery = readDataFromFile(filename);
+    //if (!Mystery.empty()) {
+     // funct.plotData(Mystery, 50, true);  
+    //}
+    
  
     // Plot the Normal Distribution
     std::cout << "Checking Normal Distributions..." << std::endl;

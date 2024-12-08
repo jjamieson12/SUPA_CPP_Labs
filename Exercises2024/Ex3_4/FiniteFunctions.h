@@ -55,6 +55,7 @@ public:
  //std::vector<double> sampleUsingMetropolis(int num_samples, double sigma, double m_RMin, double m_RMax);
 
   int m_IntDiv = 0; // Number of divisions for performing integral
+    
   
 std::vector<double> sample(int num_samples, double sigma);
   

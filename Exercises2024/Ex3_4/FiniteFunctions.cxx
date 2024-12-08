@@ -106,6 +106,8 @@ double FiniteFunction::integral(int Ndiv) {
 Sampling task
 #################
 */
+//not sure that we need two dimensional x and y sampling or just one 
+/*
 // using the metrppolis algorithm for sampling
 std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     std::vector<double> samples;
@@ -120,14 +122,14 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     double current_sample = uniform_dist(gen); //initialiazation of first sample for uniform distribution
     // I made this check to make sure that i can get my samling data
     // open the file to write the samplinf data , check the Output/data
-    /*
+    
     std::ofstream output_file("Outputs/data/sampling_data.txt");
    // if file is not craeted then
     if (!output_file) {
         std::cerr << "Unable to write into the file!" << std::endl;
         return samples;
     }
-*/
+
     // Sample using the Metropolis algorithm, i put num_samples = 500 to get the allignment with data
     for (int i = 0; i < num_samples; ++i) {
         //proposed a new sample y, normal distribution centered at current samples
@@ -152,13 +154,72 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
         samples.push_back(current_sample);
 
         // writing the values to the file here
-       // double y_value = callFunction(current_sample);
-       // output_file << current_sample << ", " << y_value << "\n";
+        double y_value = callFunction(current_sample);
+        output_file << current_sample << ", " << y_value << "\n";
         
     }
 
     // Close the output file
-    //output_file.close();  
+    output_file.close();  
+
+    return samples;
+}
+*/
+// this will generate one sample data file for one dimensional data 
+std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
+    std::vector<double> samples;  // To store the accepted samples
+    
+    // Initialize random number generators
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    
+    // Uniform distribution for sampling the initial sample x1
+    std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax);
+    
+    // Normal distribution for proposing new samples (Gaussian centered on current sample)
+    std::normal_distribution<> normal_dist(0.0, sigma);
+
+    // Start by sampling an initial value from the uniform distribution
+    double current_sample = uniform_dist(gen);
+
+    // Perform Metropolis sampling
+    for (int i = 0; i < num_samples; ++i) {
+        // Propose a new sample y, drawn from a Gaussian centered on the current sample
+        double proposal = current_sample + normal_dist(gen);
+
+        // Ensure the proposal is within bounds [m_RMin, m_RMax]
+        if (proposal < m_RMin) proposal = m_RMin;
+        if (proposal > m_RMax) proposal = m_RMax;
+
+        // Calculate the acceptance ratio A = min(f(y) / f(xi), 1)
+        double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
+        
+        // Generate a random number T between 0 and 1
+        double T = uniform_dist(gen);
+
+        // If T < A, accept the new proposal
+        if (T < A) {
+            current_sample = proposal;  // Move to the new sample
+        }
+
+        // Store the accepted sample
+        samples.push_back(current_sample);
+    }
+
+    // Save the sampled data to a file (optional)
+    std::ofstream output_file("Outputs/data/sampled_data.txt");
+    if (!output_file) {
+        std::cerr << "Unable to write into the file!" << std::endl;
+        return samples;
+    }
+
+    // Write the sampled data to the file
+    for (const auto& sample : samples) {
+        output_file << sample << "\n";  // Save each sample on a new line
+    }
+
+    // Close the output file
+    output_file.close();
 
     return samples;
 }
@@ -195,6 +256,7 @@ void FiniteFunction::printInfo(){
 void FiniteFunction::plotFunction(){
   m_function_scan = this->scanFunction(10000);
   m_plotfunction = true;
+  m_plotsamplepoints = true;
 }
 
 //Transform data points into a format gnuplot can use (histogram) and set flag to enable drawing of data to output plot
@@ -203,8 +265,9 @@ void FiniteFunction::plotData(std::vector<double> &points, int Nbins, bool isdat
   if (isdata){
     m_data = this->makeHist(points,Nbins);
     m_plotdatapoints = true;
-    m_samples = this->makeHist(points,Nbins); //need to recheck again 
-    m_plotsamplepoints = true;
+    //m_samples = this->makeHist(points,Nbins); //need to recheck again 
+    //m_plotsamplepoints = true;
+     
   }
   else{
     std::cout<<"No data to produce sample"<<std::endl;
@@ -319,11 +382,14 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
   else if (m_plotsamplepoints == true){
     gp << "set terminal pngcairo\n";
     gp << "set output 'Outputs/png/"<<m_FunctionName<<".png'\n"; 
-    gp << "set xrange ["<<-15.0<<":"<<15.0<<"]\n";
+    gp << "set xrange ["<<m_RMin<<":"<<m_RMax<<"]\n";
     gp << "plot '-' with points ps 2 lc rgb 'blue' title 'sampled data'\n";
     gp.send1d(m_samples); //replaced with m_samples 
   }
+  
+  
+
+
+
+
 }
-
-
-
