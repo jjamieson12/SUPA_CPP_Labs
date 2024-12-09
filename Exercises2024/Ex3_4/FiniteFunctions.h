@@ -74,10 +74,30 @@ std::vector<double> sample(int num_samples, double sigma);
   void checkPath(std::string outstring); // Helper function to ensure data and PNG paths are correct
   void generatePlot(Gnuplot &gp); 
   
-  double invxsquared(double x); // Default functional form
-  
-  
-  
+  //double invxsquared(double x); // Default functional form
+ // double simpleGaussian(double x);
+ /*
+  public:
+    // Constructor
+    FiniteFunction(double range_min, double range_max, std::string outfile1, double mean1, double stddev1, double step_size1);
+
+    // Override the callFunction method to implement the Gaussian (Normal) Distribution formula
+    double callFunction(double x1) override;
+
+    // Setters and Getters
+    void setMean(double mean1);
+    void setStdDev(double stddev1);
+    double getMean() const;
+    double getStdDev() const;
+
+private:
+    double m_mean;
+    double m_stddev;
+    double m_step_size;
+   */
 };
+  
+  
+
 
 

@@ -63,23 +63,26 @@ int main() {
     double range_min = -15.0;  
     double range_max = 15.0;
     double step_size = 0.1; 
-    int num_samples = 200;
-    double proposal_stddev = 0.001;
+    int num_samples = 100;
+    double proposal_stddev = 0.1;
     double sigma = 1.0;
-    std::string filename = "Outputs/data/MysteryData16341.txt";  
+    std::string filename = "Outputs/data/MysteryData16341.txt";   
 
-
-    std::string sample_filename = "Outputs/data/sampled_data.txt";  //try to see if you can plot the sampling  
-
-
-    // this is our data file generated from GenerateRandomData
+// this is our data file generated from GenerateRandomData
+    std::string sample_filename = "Outputs/data/sampled_data.txt"; 
+     //sampling data
     
+    
+ 
+    
+    
+
     string output_file = "MysteryPlot";
     FiniteFunction funct(range_min, range_max, output_file);
     funct.plotFunction();
      vector<double> Mystry = readDataFromFile(sample_filename); // taking the myster data
     if (!Mystry.empty()) {
-     funct.plotData(Mystry, 100, false);   //50 : NBins and data points set true
+     funct.plotData(Mystry, 50, false);   //50 : NBins and data points set true
     }
     //plotting the data as well
     vector<double> datapoints = readDataFromFile(filename); // taking the myster data
@@ -90,8 +93,7 @@ int main() {
     cout << "This is default function ..." << endl;
     FiniteFunction function;
    
- 
-   
+
       std::vector<double> sampled_data = function.sample(num_samples, sigma);
 
     // Optionally, print the sampled data
@@ -103,8 +105,8 @@ int main() {
  
     // Plot the Normal Distribution
     std::cout << "Checking Normal Distributions..." << std::endl;
-    double mean = 2.2;
-    double stddev = 2.0;
+    double mean = 2.2; //need to set the shape 
+    double stddev = 1.8;
     string output_file1 = "NormalDistribution"; // the normal Distribution png 
     // creating the instance
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev); 
@@ -112,7 +114,7 @@ int main() {
     normalDist.plotFunction();
     vector<double> normal = readDataFromFile(filename); // taking the myster data
     if (!normal.empty()) {
-      normalDist.plotData(normal, 100, true);   //50 : NBins and data points set true
+      normalDist.plotData(normal, 50, true);   //50 : NBins and data points set true
     }
      vector<double> normalsample = readDataFromFile(sample_filename); // taking the myster data
     if (!normalsample.empty()) {
@@ -120,8 +122,8 @@ int main() {
     }
 
     // This section is CauchyLorentzDistribution 
-    double x0 = 2.8;   // Location parameter ,removing it from 0.0
-    double gamma = 1.8; //scaling parameters , this helps for fit the distribution
+    double x0 = 2.7;   // Location parameter ,removing it from 0.0
+    double gamma = 1.7; //scaling parameters , this helps for fit the distribution
     string output_file4 = "CauchyLorentzDistribution";
     CauchyLorentzDistribution cld(range_min, range_max, output_file4, x0, gamma, step_size);
     cld.plotFunction(); //plot the function 
@@ -138,15 +140,15 @@ int main() {
    //This section is for NegativeCrystalBallDistribution 
     double x_bar = 3.0;   //mean value, i adjusted it to fit 3.0
     double sigma1 = 1.8;   // standard deviation value 
-    double alpha = 10;   // transition parameter to 2
-    double n = 1.1;       // n is the tail parameter
+    double alpha = 2.0;   // transition parameter to 2
+    double n = 3.0;       // n is the tail parameter
     string output_file2 = "NegativeCrystalBallDistribution"; // this png for distribution
     NegativeCrystalBallDistribution ncbdDist(range_min, range_max, output_file2, x_bar, sigma1, alpha, n, step_size);
     ncbdDist.plotFunction(); // plot the ncbd
     // Read and plot Negative Crystal Ball Distribution data
      vector<double> Crystal = readDataFromFile(filename);
     if (!Crystal.empty()) {
-        ncbdDist.plotData(Crystal, 30, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        ncbdDist.plotData(Crystal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
     vector<double> Crystalsample = readDataFromFile(sample_filename);

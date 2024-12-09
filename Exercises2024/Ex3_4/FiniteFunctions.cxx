@@ -58,9 +58,34 @@ double FiniteFunction::rangeMax() {return m_RMax;};
 ###################
 */ 
 // This is default function
-double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
-double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
+//double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
 
+//double FiniteFunction::simpleGaussian(double x) {return std::exp(-x * x); };
+//double FiniteFunction::callFunction(double x) {return this->simpleGaussian(x);};
+
+//double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
+/*
+//using a new gussian function to see if it works 
+FiniteFunction::GaussianDistribution(double range_min, double range_max, std::string outfile, double mean1, double stddev1, double step_size1)
+    : FiniteFunction(range_min, range_max, outfile), m_mean(mean), m_stddev(stddev), m_step_size(step_size) {}
+
+// Override the callFunction method to implement the Gaussian Distribution formula
+   // Call the function for a specific value of x
+    double x1 = 1.0;  // Example x-value
+double GaussianDistribution::callFunction(double x1) {
+    double normalizationFactor = 1.0 / (m_stddev * sqrt(2 * M_PI));
+    double exponent = -0.5 * pow((x - m_mean) / m_stddev, 2);
+    std::cout << "callFunction(" << x << ") -> " << normalizationFactor * exp(exponent) << " with mean = " << m_mean << " and stddev = " << m_stddev << std::endl;
+    return normalizationFactor * exp(exponent);
+}
+
+// Setters and Getters
+void GaussianDistribution::setMean(double mean1) { m_mean = mean1; }
+void GaussianDistribution::setStdDev(double stddev1) { m_stddev = stddev1; }
+
+double GaussianDistribution::getMean() const { return m_mean; }
+double GaussianDistribution::getStdDev() const { return m_stddev; }
+*/
 /*
 ###################
 Integration by hand (output needed to normalise function when plotting)
@@ -108,65 +133,7 @@ double FiniteFunction::integral(int Ndiv) {
 Sampling task
 #################
 */
-//not sure that we need two dimensional x and y sampling or just one 
-/*
-// using the metrppolis algorithm for sampling
-std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
-    std::vector<double> samples;
 
-  // generating the random number 
-     std::random_device rd; 
-    std::mt19937 gen (rd());
-    std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax); 
-    //uniform distribution for xi 
-    std::normal_distribution<> normal_dist(0.0, sigma);  
-    // Normal distribution for proposal
-    double current_sample = uniform_dist(gen); //initialiazation of first sample for uniform distribution
-    // I made this check to make sure that i can get my samling data
-    // open the file to write the samplinf data , check the Output/data
-    
-    std::ofstream output_file("Outputs/data/sampling_data.txt");
-   // if file is not craeted then
-    if (!output_file) {
-        std::cerr << "Unable to write into the file!" << std::endl;
-        return samples;
-    }
-
-    // Sample using the Metropolis algorithm, i put num_samples = 500 to get the allignment with data
-    for (int i = 0; i < num_samples; ++i) {
-        //proposed a new sample y, normal distribution centered at current samples
-        double proposal = current_sample + normal_dist(gen);
-
-        //setting the valid range for the proposal
-        if (proposal < m_RMin) proposal = m_RMin;
-        if (proposal > m_RMax) proposal = m_RMax;
-
-        // Calculate the acceptance ratio A
-        double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
-       //genearting T between 0 and 1
-        double T = uniform_dist(gen);
-        // printing the T values 
-        std::cout << "T=" << T << std::endl;
-        //selection section
-        if (T < A) {
-            current_sample = proposal;
-        }
-
-        // will store only the selected samples 
-        samples.push_back(current_sample);
-
-        // writing the values to the file here
-        double y_value = callFunction(current_sample);
-        output_file << current_sample << ", " << y_value << "\n";
-        
-    }
-
-    // Close the output file
-    output_file.close();  
-
-    return samples;
-}
-*/
 //here i am not very clear do you want us to generate the gussiandistribution sample or not 
 // this will generate one sample data file for one dimensional data 
 std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
