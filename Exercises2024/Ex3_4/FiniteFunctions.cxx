@@ -58,34 +58,15 @@ double FiniteFunction::rangeMax() {return m_RMax;};
 ###################
 */ 
 // This is default function
-//double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
+double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
+double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
+
 
 //double FiniteFunction::simpleGaussian(double x) {return std::exp(-x * x); };
 //double FiniteFunction::callFunction(double x) {return this->simpleGaussian(x);};
 
-//double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
-/*
-//using a new gussian function to see if it works 
-FiniteFunction::GaussianDistribution(double range_min, double range_max, std::string outfile, double mean1, double stddev1, double step_size1)
-    : FiniteFunction(range_min, range_max, outfile), m_mean(mean), m_stddev(stddev), m_step_size(step_size) {}
 
-// Override the callFunction method to implement the Gaussian Distribution formula
-   // Call the function for a specific value of x
-    double x1 = 1.0;  // Example x-value
-double GaussianDistribution::callFunction(double x1) {
-    double normalizationFactor = 1.0 / (m_stddev * sqrt(2 * M_PI));
-    double exponent = -0.5 * pow((x - m_mean) / m_stddev, 2);
-    std::cout << "callFunction(" << x << ") -> " << normalizationFactor * exp(exponent) << " with mean = " << m_mean << " and stddev = " << m_stddev << std::endl;
-    return normalizationFactor * exp(exponent);
-}
 
-// Setters and Getters
-void GaussianDistribution::setMean(double mean1) { m_mean = mean1; }
-void GaussianDistribution::setStdDev(double stddev1) { m_stddev = stddev1; }
-
-double GaussianDistribution::getMean() const { return m_mean; }
-double GaussianDistribution::getStdDev() const { return m_stddev; }
-*/
 /*
 ###################
 Integration by hand (output needed to normalise function when plotting)
@@ -135,6 +116,7 @@ Sampling task
 */
 
 //here i am not very clear do you want us to generate the gussiandistribution sample or not 
+
 // this will generate one sample data file for one dimensional data 
 std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     std::vector<double> samples;  // To store the accepted samples

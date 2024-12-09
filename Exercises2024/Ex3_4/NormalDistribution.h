@@ -18,4 +18,3 @@ NormalDistribution(
         double getMean () const;
         double getStdDev() const;
 };     
-

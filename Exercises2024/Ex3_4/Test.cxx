@@ -71,11 +71,6 @@ int main() {
 // this is our data file generated from GenerateRandomData
     std::string sample_filename = "Outputs/data/sampled_data.txt"; 
      //sampling data
-    
-    
- 
-    
-    
 
     string output_file = "MysteryPlot";
     FiniteFunction funct(range_min, range_max, output_file);
