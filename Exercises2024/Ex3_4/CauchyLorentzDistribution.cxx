@@ -7,7 +7,7 @@
 CauchyLorentzDistribution::CauchyLorentzDistribution(double range_min, double range_max, std::string outfile, double x0, double gamma, double step_size)
     : FiniteFunction(range_min, range_max, outfile), m_x0(x0), m_gamma(gamma), m_step_size(step_size) {
    // just the cross check to ensure that gamma value should be greater than 0
-    if (gamma <= 0) throw std::invalid_argument("gamma value must be greater than 0");
+    if (gamma <= 1.0) throw std::invalid_argument("gamma value must be greater than 0");
 }
 // call function 
 double CauchyLorentzDistribution::callFunction(double x) {
