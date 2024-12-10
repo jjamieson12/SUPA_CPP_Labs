@@ -39,7 +39,7 @@ vector<double> readDataFromFile(const string& filename) {
     }
 
     // limiting the data to 500 points here 
-    while (file >> value && count < 200) {
+    while (file >> value && count < 1000) {
         data.push_back(value); //pushing the values back here
         count++; //doing the increment 
     }
@@ -63,9 +63,9 @@ int main() {
     double range_min = -15.0;  
     double range_max = 15.0;
     double step_size = 0.1; 
-    int num_samples = 100;
-    double proposal_stddev = 1.0;
-    double sigma = 1.8;
+    int num_samples = 10000;
+    double proposal_stddev = 0.5;
+    double sigma = 1.0;
     std::string filename = "Outputs/data/MysteryData16341.txt";   
 
 // this is our data file generated from GenerateRandomData

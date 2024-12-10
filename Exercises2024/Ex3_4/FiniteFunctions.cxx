@@ -157,6 +157,12 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
 
         // Store the accepted sample
         samples.push_back(current_sample);
+        int accepted = 0;
+        for (int j = 0; j < num_samples; ++j) {
+            if (T < A) ++accepted;
+          }
+        std::cout << "Acceptance rate: " << (double)accepted / num_samples * 100 << "%" << std::endl;
+
     }
 
     // Save the sampled data to a file (optional)
