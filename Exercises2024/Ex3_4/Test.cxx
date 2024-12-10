@@ -64,8 +64,8 @@ int main() {
     double range_max = 15.0;
     double step_size = 0.1; 
     int num_samples = 100;
-    double proposal_stddev = 0.1;
-    double sigma = 1.0;
+    double proposal_stddev = 1.0;
+    double sigma = 1.8;
     std::string filename = "Outputs/data/MysteryData16341.txt";   
 
 // this is our data file generated from GenerateRandomData
@@ -126,12 +126,12 @@ int main() {
     if (!Cauchy.empty()) {
         cld.plotData(Cauchy, 50, true);      //plotting the Cauchy function
     }
-    /*
+    
     vector<double> Cauchysample = readDataFromFile(sample_filename);
     if (!Cauchysample.empty()) {
         cld.plotData(Cauchysample, 50, false);      //plotting the Cauchy function
     }
-    */
+    
    //This section is for NegativeCrystalBallDistribution 
     double x_bar = 3.0;   //mean value, i adjusted it to fit 3.0
     double sigma1 = 1.8;   // standard deviation value 

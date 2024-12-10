@@ -123,7 +123,8 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     
     // Initialize random number generators
     std::random_device rd;
-    std::mt19937 gen(rd());
+    std::mt19937 gen(42); //setting the seed for sampling
+    
     
     // Uniform distribution for sampling the initial sample x1
     std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax);
