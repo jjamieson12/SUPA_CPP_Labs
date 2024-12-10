@@ -135,9 +135,9 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     // Start by sampling an initial value from the uniform distribution
     double current_sample = uniform_dist(gen);
 
-    // Perform Metropolis sampling
+    // perform the Metropolis sampling 
     for (int i = 0; i < num_samples; ++i) {
-        // Propose a new sample y, drawn from a Gaussian centered on the current sample
+        //proposed the new y sampled value
         double proposal = current_sample + normal_dist(gen);
 
         // Ensure the proposal is within bounds [m_RMin, m_RMax]
@@ -157,30 +157,31 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
 
         // Store the accepted sample
         samples.push_back(current_sample);
+        //just a cross chevk about the acceptance value because my sampling looks very strange
         int accepted = 0;
-        for (int j = 0; j < num_samples; ++j) {
-            if (T < A) ++accepted;
-          }
+        for (int j = 0, j<num_samples, ++j) {
+          if(T<A) ++accepted;
+        }
         std::cout << "Acceptance rate: " << (double)accepted / num_samples * 100 << "%" << std::endl;
-
+      
     }
 
-    // Save the sampled data to a file (optional)
-    std::ofstream output_file("Outputs/data/sampled_data.txt");
-    if (!output_file) {
-        std::cerr << "Unable to write into the file!" << std::endl;
-        return samples;
+    // Save the sampled data to a file just to see my sampling data
+    std::ofstream output_file("Outputs/data/sampled_data.txt");  //its inside the data directort
+    if (!output_file) { // if the file is not open
+        std::cerr << "Unable to write into the file!" << std::endl; //created this warning statements
+        return samples; 
     }
 
-    // Write the sampled data to the file
+    //writing the sample data into my file
     for (const auto& sample : samples) {
-        output_file << sample << "\n";  // Save each sample on a new line
+        output_file << sample << "\n";  //one dimensional data 
     }
 
-    // Close the output file
+    // closing the sampled.txt file
     output_file.close();
 
-    return samples;
+    return samples; // return back the value
 }
 
  /*
