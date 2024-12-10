@@ -64,8 +64,8 @@ int main() {
     double range_max = 15.0;
     double step_size = 0.1; 
     int num_samples = 10000;
-    double proposal_stddev = 0.5;
-    double sigma = 1.0;
+    double proposal_stddev = 1.0;
+    double sigma = 0.3;
     std::string filename = "Outputs/data/MysteryData16341.txt";   
 
 // this is our data file generated from GenerateRandomData

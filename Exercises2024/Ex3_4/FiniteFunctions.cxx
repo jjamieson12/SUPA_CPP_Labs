@@ -119,36 +119,41 @@ Sampling task
 
 // this will generate one sample data file for one dimensional data 
 std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
-    std::vector<double> samples;  // To store the accepted samples
+    std::vector<double> samples;  // to store the accepted samples
     
-    // Initialize random number generators
+    //initializing the random generator
     std::random_device rd;
     std::mt19937 gen(42); //setting the seed for sampling
     
     
-    // Uniform distribution for sampling the initial sample x1
+    //uniform distribution for sampling the xi
     std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax);
     
-    // Normal distribution for proposing new samples (Gaussian centered on current sample)
+    // Normal distribution for proposing new samples
+     
     std::normal_distribution<> normal_dist(0.0, sigma);
 
     // Start by sampling an initial value from the uniform distribution
     double current_sample = uniform_dist(gen);
-
+    
     // perform the Metropolis sampling 
     for (int i = 0; i < num_samples; ++i) {
         //proposed the new y sampled value
         double proposal = current_sample + normal_dist(gen);
 
+
         // Ensure the proposal is within bounds [m_RMin, m_RMax]
         if (proposal < m_RMin) proposal = m_RMin;
         if (proposal > m_RMax) proposal = m_RMax;
 
-        // Calculate the acceptance ratio A = min(f(y) / f(xi), 1)
+        //calculating the acceptance ration A = min(f(y) / f(xi), 1)
         double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
         
-        // Generate a random number T between 0 and 1
+        //generating the random number T between 0 and 1
+    
         double T = uniform_dist(gen);
+              
+
 
         // If T < A, accept the new proposal
         if (T < A) {
@@ -157,15 +162,8 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
 
         // Store the accepted sample
         samples.push_back(current_sample);
-        //just a cross chevk about the acceptance value because my sampling looks very strange
-        int accepted = 0;
-        for (int j = 0, j<num_samples, ++j) {
-          if(T<A) ++accepted;
-        }
-        std::cout << "Acceptance rate: " << (double)accepted / num_samples * 100 << "%" << std::endl;
-      
     }
-
+        
     // Save the sampled data to a file just to see my sampling data
     std::ofstream output_file("Outputs/data/sampled_data.txt");  //its inside the data directort
     if (!output_file) { // if the file is not open
