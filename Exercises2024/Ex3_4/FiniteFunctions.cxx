@@ -122,11 +122,15 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
     
     
     //uniform distribution for sampling the xi
-    std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax);
+    //std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax);
     
     // Normal distribution for proposing new samples
+    std::uniform_real_distribution<> uniform_dist(0.0, 1.0);
+
+
+
      
-    std::normal_distribution<> normal_dist(0.0, sigma);
+    std::normal_distribution<> normal_dist(0.0, 1.0);
 
     // Start by sampling an initial value from the uniform distribution
     double current_sample = uniform_dist(gen);

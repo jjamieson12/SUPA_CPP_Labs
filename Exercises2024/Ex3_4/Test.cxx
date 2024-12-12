@@ -65,7 +65,7 @@ int main() {
     double step_size = 0.1; 
     int num_samples = 10000000;
     double proposal_stddev = 1.0;
-    double sigma = 2.0;
+    double sigma = 0.5;
     std::string filename = "Outputs/data/MysteryData16341.txt";   
 
 // this is our data file generated from GenerateRandomData
@@ -96,12 +96,12 @@ int main() {
         std::cout << sample << std::endl;
     }
 
-    
+   
  
     // Plot the Normal Distribution
     std::cout << "Checking Normal Distributions..." << std::endl;
     double mean = 2.2; //need to set the shape 
-    double stddev = 1.8;
+    double stddev = 2.0;
     string output_file1 = "NormalDistribution"; // the normal Distribution png 
     // creating the instance
     NormalDistribution normalDist(range_min, range_max, output_file1, mean, stddev); 
@@ -113,6 +113,7 @@ int main() {
     }
      vector<double> normalsample = readDataFromFile(sample_filename); // taking the myster data
     if (!normalsample.empty()) {
+     normalDist.sample(100000,0.5);
      normalDist.plotData(normalsample, 200, false);   //50 : NBins and data points set true
     }
 
@@ -129,6 +130,7 @@ int main() {
     
     vector<double> Cauchysample = readDataFromFile(sample_filename);
     if (!Cauchysample.empty()) {
+        cld.sample(100000,0.5);
         cld.plotData(Cauchysample, 200, false);      //plotting the Cauchy function
     }
     
@@ -148,6 +150,7 @@ int main() {
     }
     vector<double> Crystalsample = readDataFromFile(sample_filename);
     if (!Crystalsample.empty()) {
+        ncbdDist.sample(100000,0.5);
         ncbdDist.plotData(Crystalsample, 200, false);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
@@ -157,10 +160,3 @@ int main() {
 
     return 0; 
 }
-
-
-
-
-
-
-
