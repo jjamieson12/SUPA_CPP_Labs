@@ -39,7 +39,7 @@ vector<double> readDataFromFile(const string& filename) {
     }
 
     // limiting the data to 500 points here 
-    while (file >> value && count < 1000) {
+    while (file >> value && count < 1000000) {
         data.push_back(value); //pushing the values back here
         count++; //doing the increment 
     }
@@ -63,9 +63,9 @@ int main() {
     double range_min = -15.0;  
     double range_max = 15.0;
     double step_size = 0.1; 
-    int num_samples = 10000;
+    int num_samples = 10000000;
     double proposal_stddev = 1.0;
-    double sigma = 0.3;
+    double sigma = 2.0;
     std::string filename = "Outputs/data/MysteryData16341.txt";   
 
 // this is our data file generated from GenerateRandomData
@@ -77,12 +77,12 @@ int main() {
     funct.plotFunction();
      vector<double> Mystry = readDataFromFile(sample_filename); // taking the myster data
     if (!Mystry.empty()) {
-     funct.plotData(Mystry, 50, false);   //50 : NBins and data points set true
+     funct.plotData(Mystry, 200, false);   //50 : NBins and data points set true
     }
     //plotting the data as well
     vector<double> datapoints = readDataFromFile(filename); // taking the myster data
     if (!datapoints.empty()) {
-     funct.plotData(datapoints, 50, true);   //50 : NBins and data points set true
+     funct.plotData(datapoints, 200, true);   //50 : NBins and data points set true
     }
 
     cout << "This is default function ..." << endl;
@@ -109,32 +109,32 @@ int main() {
     normalDist.plotFunction();
     vector<double> normal = readDataFromFile(filename); // taking the myster data
     if (!normal.empty()) {
-      normalDist.plotData(normal, 50, true);   //50 : NBins and data points set true
+      normalDist.plotData(normal, 200, true);   //50 : NBins and data points set true
     }
      vector<double> normalsample = readDataFromFile(sample_filename); // taking the myster data
     if (!normalsample.empty()) {
-     normalDist.plotData(normalsample, 50, false);   //50 : NBins and data points set true
+     normalDist.plotData(normalsample, 200, false);   //50 : NBins and data points set true
     }
 
     // This section is CauchyLorentzDistribution 
     double x0 = 2.7;   // Location parameter ,removing it from 0.0
-    double gamma = 1.7; //scaling parameters , this helps for fit the distribution
+    double gamma = 1.8; //scaling parameters , this helps for fit the distribution
     string output_file4 = "CauchyLorentzDistribution";
     CauchyLorentzDistribution cld(range_min, range_max, output_file4, x0, gamma, step_size);
     cld.plotFunction(); //plot the function 
     vector<double> Cauchy = readDataFromFile(filename);
     if (!Cauchy.empty()) {
-        cld.plotData(Cauchy, 50, true);      //plotting the Cauchy function
+        cld.plotData(Cauchy, 200, true);      //plotting the Cauchy function
     }
     
     vector<double> Cauchysample = readDataFromFile(sample_filename);
     if (!Cauchysample.empty()) {
-        cld.plotData(Cauchysample, 50, false);      //plotting the Cauchy function
+        cld.plotData(Cauchysample, 200, false);      //plotting the Cauchy function
     }
     
    //This section is for NegativeCrystalBallDistribution 
     double x_bar = 3.0;   //mean value, i adjusted it to fit 3.0
-    double sigma1 = 1.8;   // standard deviation value 
+    double sigma1 = 2.2;   // standard deviation value 
     double alpha = 2.0;   // transition parameter to 2
     double n = 3.0;       // n is the tail parameter
     string output_file2 = "NegativeCrystalBallDistribution"; // this png for distribution
@@ -143,12 +143,12 @@ int main() {
     // Read and plot Negative Crystal Ball Distribution data
      vector<double> Crystal = readDataFromFile(filename);
     if (!Crystal.empty()) {
-        ncbdDist.plotData(Crystal, 50, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        ncbdDist.plotData(Crystal, 200, true);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
     vector<double> Crystalsample = readDataFromFile(sample_filename);
     if (!Crystalsample.empty()) {
-        ncbdDist.plotData(Crystalsample, 50, false);  // Use 100 bins for histogram-like plotting, setting 'false' for data
+        ncbdDist.plotData(Crystalsample, 200, false);  // Use 100 bins for histogram-like plotting, setting 'false' for data
 
     }
 
