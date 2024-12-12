@@ -62,11 +62,6 @@ double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
 double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
 
 
-//double FiniteFunction::simpleGaussian(double x) {return std::exp(-x * x); };
-//double FiniteFunction::callFunction(double x) {return this->simpleGaussian(x);};
-
-
-
 /*
 ###################
 Integration by hand (output needed to normalise function when plotting)
@@ -144,7 +139,7 @@ std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
 
         // Ensure the proposal is within bounds [m_RMin, m_RMax]
         if (proposal < m_RMin) proposal = m_RMin;
-        if (proposal > m_RMax) proposal = m_RMax;
+        if (proposal > m_RMax) proposal = m_RMax; //to be withing the range 
 
         //calculating the acceptance ration A = min(f(y) / f(xi), 1)
         double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
@@ -344,9 +339,5 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
     gp.send1d(m_samples); //replaced with m_samples 
   }
   
-  
-
-
-
 
 }
