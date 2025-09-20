@@ -12,5 +12,4 @@ jobs:
     steps:
     - name: test_submission
       run: |
-        echo "Successfully pushed changes to online repo! :-)\n Latest commit is:\n"
-        git log -n 1
+        echo "Successfully pushed changes to online repo! :-)"
