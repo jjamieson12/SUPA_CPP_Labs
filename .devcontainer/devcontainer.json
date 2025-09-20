@@ -18,10 +18,12 @@
 		// Configure properties specific to VS Code.
 		"vscode": {
 			"settings": {},
-			"extensions": ["ms-vscode.cpptools",
-				       "ms-vscode.cmake-tools",
-        			       "fizzybreezy.gnuplot",
-				       "analytic-signal.preview-pdf"
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools",
+				"fizzybreezy.gnuplot",
+				"analytic-signal.preview-pdf",
+				"github.vscode-github-actions"
 			]
 		}
 	}
