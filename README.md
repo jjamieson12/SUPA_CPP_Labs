@@ -39,11 +39,13 @@ g++ -std=c++20 -w myScript.cxx -o myScript
 
 The source control tab is used to keep track of any changes you make and is what you will use to submit your final code. In the image above the blue 2 indicates that there are two files that have changed recently. 
 
-When you have code you want to submit open this tab, choose all of the files you would like to add, optionally write a commit message at the top. 
+When you have code you want to submit open this tab, choose all of the files you would like to add and then write a commit message at the top. 
 
 Finally click <kbd>commit</kbd> and <kbd>sync changes</kbd>:
 
 ![](./assets/GitSubmission.png)
+
+If the submission is successfull you should see a notification within the source control tab that the submission CI check has completed successfully.  
 
 ## Some further notes on codespaces:
 - Provided you have a personal github account you should automatically get 60 core-hours of free codespace usage per-month, which should easily be enough for this course. 
