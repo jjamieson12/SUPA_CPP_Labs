@@ -1,0 +1,2 @@
+Fitted Function: y = 0.87 * x + 2.03
+Reduced Chi-Squared: 164765

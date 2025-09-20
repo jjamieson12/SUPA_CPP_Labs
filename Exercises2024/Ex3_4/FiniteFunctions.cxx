@@ -1,26 +1,30 @@
+//adding the libararies
+
+#include <random>
 #include <iostream>
 #include <string>
 #include <vector>
 #include "FiniteFunctions.h"
-#include <filesystem> //To check extensions in a nice way
-
-#include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
+#include <filesystem> //checking the extension
+#include "gnuplot-iostream.h" //Needed to produce plots (not part of the course)
 
 using std::filesystem::path;
 
 //Empty constructor
+
 FiniteFunction::FiniteFunction(){
+
   m_RMin = -5.0;
   m_RMax = 5.0;
   this->checkPath("DefaultFunction");
-  m_Integral = NULL;
+  m_Integral = 0.0;
 }
 
 //initialised constructor
 FiniteFunction::FiniteFunction(double range_min, double range_max, std::string outfile){
   m_RMin = range_min;
   m_RMax = range_max;
-  m_Integral = NULL;
+  m_Integral = 0.0;
   this->checkPath(outfile); //Use provided string to name output files
 }
 
@@ -53,24 +57,46 @@ double FiniteFunction::rangeMax() {return m_RMax;};
 //Function eval
 ###################
 */ 
+// This is default function
 double FiniteFunction::invxsquared(double x) {return 1/(1+x*x);};
 double FiniteFunction::callFunction(double x) {return this->invxsquared(x);}; //(overridable)
+
 
 /*
 ###################
 Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
-double FiniteFunction::integrate(int Ndiv){ //private
+
+
+//double FiniteFunction::integrate(int Ndiv){ //private
   //ToDo write an integrator
-  return -99;  
+//return -99;  
+//}
+
+// Here i used the trapozoidal rule for normalization function
+  double FiniteFunction::integrate(int Ndiv) {
+  double step = (m_RMax - m_RMin) / Ndiv;
+  double m_Integral = 0.0;
+  
+
+    // applying the rule
+  for (int i = 0; i < Ndiv; ++i) {
+      double x1 = m_RMin + i * step;
+      double x2 = m_RMin + (i + 1) * step;
+      m_Integral += 0.5 * (this->callFunction(x1) + this->callFunction(x2)) * step;
+
+  }
+
+    return m_Integral; 
 }
-double FiniteFunction::integral(int Ndiv) { //public
+
+double FiniteFunction::integral(int Ndiv) { 
   if (Ndiv <= 0){
     std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
     Ndiv = 1000;
   }
-  if (m_Integral == NULL || Ndiv != m_IntDiv){
+  if (m_Integral == 0.0 || Ndiv != m_IntDiv){
     m_IntDiv = Ndiv;
     m_Integral = this->integrate(Ndiv);
     return m_Integral;
@@ -79,10 +105,88 @@ double FiniteFunction::integral(int Ndiv) { //public
 }
 
 /*
+#################
+Sampling task
+#################
+*/
+
+//here i am not very clear do you want us to generate the gussiandistribution sample or not 
+
+// this will generate one sample data file for one dimensional data 
+std::vector<double> FiniteFunction::sample(int num_samples, double sigma) {
+    std::vector<double> samples;  // to store the accepted samples
+    
+    //initializing the random generator
+    std::random_device rd;
+    std::mt19937 gen(42); //setting the seed for sampling
+    
+    
+    //uniform distribution for sampling the xi
+    //std::uniform_real_distribution<> uniform_dist(m_RMin, m_RMax);
+    
+    // Normal distribution for proposing new samples
+    std::uniform_real_distribution<> uniform_dist(0.0, 1.0);
+
+
+
+     
+    std::normal_distribution<> normal_dist(0.0, 1.0);
+
+    // Start by sampling an initial value from the uniform distribution
+    double current_sample = uniform_dist(gen);
+    
+    // perform the Metropolis sampling 
+    for (int i = 0; i < num_samples; ++i) {
+        //proposed the new y sampled value
+        double proposal = current_sample + normal_dist(gen);
+
+
+        // Ensure the proposal is within bounds [m_RMin, m_RMax]
+        if (proposal < m_RMin) proposal = m_RMin;
+        if (proposal > m_RMax) proposal = m_RMax; //to be withing the range 
+
+        //calculating the acceptance ration A = min(f(y) / f(xi), 1)
+        double A = std::min(callFunction(proposal) / callFunction(current_sample), 1.0);
+        
+        //generating the random number T between 0 and 1
+    
+        double T = uniform_dist(gen);
+              
+
+
+        // If T < A, accept the new proposal
+        if (T < A) {
+            current_sample = proposal;  // Move to the new sample
+        }
+
+        // Store the accepted sample
+        samples.push_back(current_sample);
+    }
+        
+    // Save the sampled data to a file just to see my sampling data
+    std::ofstream output_file("Outputs/data/sampled_data.txt");  //its inside the data directort
+    if (!output_file) { // if the file is not open
+        std::cerr << "Unable to write into the file!" << std::endl; //created this warning statements
+        return samples; 
+    }
+
+    //writing the sample data into my file
+    for (const auto& sample : samples) {
+        output_file << sample << "\n";  //one dimensional data 
+    }
+
+    // closing the sampled.txt file
+    output_file.close();
+
+    return samples; // return back the value
+}
+
+ /*
 ###################
 //Helper functions 
 ###################
 */
+
 // Generate paths from user defined stem
 void FiniteFunction::checkPath(std::string outfile){
  path fp = outfile;
@@ -117,8 +221,12 @@ void FiniteFunction::plotData(std::vector<double> &points, int Nbins, bool isdat
   if (isdata){
     m_data = this->makeHist(points,Nbins);
     m_plotdatapoints = true;
+    //m_samples = this->makeHist(points,Nbins); //need to recheck again 
+    //m_plotsamplepoints = true;
+     
   }
   else{
+    std::cout<<"No data to produce sample"<<std::endl;
     m_samples = this->makeHist(points,Nbins);
     m_plotsamplepoints = true;
   }
@@ -140,7 +248,7 @@ std::vector< std::pair<double,double> > FiniteFunction::scanFunction(int Nscan){
   double step = (m_RMax - m_RMin)/(double)Nscan;
   double x = m_RMin;
   //We use the integral to normalise the function points
-  if (m_Integral == NULL) {
+  if (m_Integral == 0.0) {
     std::cout << "Integral not set, doing it now" << std::endl;
     this->integral(Nscan);
     std::cout << "integral: " << m_Integral << ", calculated using " << Nscan << " divisions" << std::endl;
@@ -232,6 +340,8 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
     gp << "set output 'Outputs/png/"<<m_FunctionName<<".png'\n"; 
     gp << "set xrange ["<<m_RMin<<":"<<m_RMax<<"]\n";
     gp << "plot '-' with points ps 2 lc rgb 'blue' title 'sampled data'\n";
-    gp.send1d(m_samples);
+    gp.send1d(m_samples); //replaced with m_samples 
   }
+  
+
 }
