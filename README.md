@@ -45,7 +45,7 @@ Finally click <kbd>commit</kbd> and <kbd>sync changes</kbd>:
 
 ![](./assets/GitSubmission.png)
 
-If the submission is successfull you should see a notification within the source control tab that the submission CI check has completed successfully.  
+If the submission is successfull you should see a notification within the GitHub tab that the submission CI check has completed successfully.  
 
 ## Some further notes on codespaces:
 - Provided you have a personal github account you should automatically get 60 core-hours of free codespace usage per-month, which should easily be enough for this course. 
